@@ -33,6 +33,7 @@
                         <div class="select-wrap">
                             <select v-model="userForm.role" class="form-select">
                                 <option value="1">管理员</option>
+                                <option value="2">企业人员</option>
                                 <option value="0">毕业生</option>
                             </select>
                             <span class="select-arrow">&#9662;</span>

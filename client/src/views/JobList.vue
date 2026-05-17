@@ -1,6 +1,10 @@
 <template>
     <div class="page">
         <div class="page-hero">
+            <router-link to="/home" class="back-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                返回首页
+            </router-link>
             <span class="hero-label">JOBS</span>
             <h1 class="hero-title">岗位列表</h1>
             <span class="hero-count">{{ filteredList.length }} RESULTS</span>
@@ -58,10 +62,12 @@
             <span class="empty-desc">暂无匹配的岗位</span>
         </div>
     </div>
+    <ChatBot />
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import ChatBot from '../components/ChatBot.vue'
 import axios from '@/util/axios.config.js'
 
 const list = ref([])
@@ -112,6 +118,19 @@ onMounted(async () => {
     gap: var(--space-md);
     flex-wrap: wrap;
 }
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--text-disabled);
+    transition: color 150ms;
+}
+
+.back-link:hover { color: var(--text-primary); }
 
 .hero-label {
     font-family: var(--font-mono);

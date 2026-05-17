@@ -66,7 +66,9 @@ const ConfigRouter = (globalStore) => {
     globalStore.setGlobalRouter(true);
 }
 const checkPermission = (item) => {
-    // 这里可以添加权限判断逻辑
+    // role=1 老师/校方：全部权限
+    // role=2 企业人员：除用户管理外的权限
+    // role=0 毕业生：不能登录admin（已在登录时拦截）
     if (item.requiresAdmin) {
         const userInfo = useUserInfoStore();
         const role = userInfo.$state.role

@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" agent="Claude" version="21.0.0">
+  <diagram name="用户登录时序图">
+    <mxGraphModel dx="780" dy="680" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="780" pageHeight="680" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="用户登录（JWT 认证）— 时序图" style="text;fontSize=14;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="210" y="8" width="280" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════ 参与者 ═══════ -->
+
+        <mxCell id="box_user" value="" style="shape=actor;size=18;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="24" y="38" width="26" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="lbl_user" value="用户" style="text;fontSize=10;fontStyle=1;align=center;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="14" y="70" width="46" height="14" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="box_login" value="Login.vue" style="rounded=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="130" y="40" width="78" height="24" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="box_axios" value="Axios&#xa;拦截器" style="rounded=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="275" y="38" width="68" height="28" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="box_server" value="Express&#xa;服务" style="rounded=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="405" y="38" width="72" height="28" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="box_ctrl" value="User&#xa;Controller" style="rounded=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="540" y="38" width="78" height="28" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="box_jwt" value="JWT&#xa;工具" style="rounded=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="680" y="38" width="55" height="28" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="box_db" value="MySQL" style="shape=cylinder3;whiteSpace=wrap;boundedLbl=1;backgroundOutline=1;size=8;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=9;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="780" y="38" width="60" height="28" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════ 生命线 ═══════ -->
+
+        <mxCell id="ll_user" value="" style="endArrow=none;dashed=1;strokeColor=#6c8ebf;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="37" y="86" as="sourcePoint"/>
+            <mxPoint x="37" y="660" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_login" value="" style="endArrow=none;dashed=1;strokeColor=#d6b656;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="169" y="64" as="sourcePoint"/>
+            <mxPoint x="169" y="660" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_axios" value="" style="endArrow=none;dashed=1;strokeColor=#d6b656;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="309" y="66" as="sourcePoint"/>
+            <mxPoint x="309" y="660" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_server" value="" style="endArrow=none;dashed=1;strokeColor=#82b366;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="441" y="66" as="sourcePoint"/>
+            <mxPoint x="441" y="660" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_ctrl" value="" style="endArrow=none;dashed=1;strokeColor=#82b366;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="579" y="66" as="sourcePoint"/>
+            <mxPoint x="579" y="660" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_jwt" value="" style="endArrow=none;dashed=1;strokeColor=#82b366;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="707" y="66" as="sourcePoint"/>
+            <mxPoint x="707" y="660" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_db" value="" style="endArrow=none;dashed=1;strokeColor=#9673a6;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="810" y="66" as="sourcePoint"/>
+            <mxPoint x="810" y="660" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ alt 片段 ═══════ -->
+
+        <mxCell id="alt_login" value="" style="fillColor=none;strokeColor=#9673a6;strokeWidth=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="10" y="90" width="830" height="410" as="geometry"/>
+        </mxCell>
+        <mxCell id="alt_tag" value="alt" style="text;fontSize=10;fontStyle=1;fontFamily=Helvetica;fontColor=#9673a6;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="14" y="90" width="25" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="alt_cond_ok" value="[登录成功] 用户存在、密码正确、账号正常" style="text;fontSize=9;fontFamily=Helvetica;fontColor=#3DDC84;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="18" y="104" width="250" height="14" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════ 登录成功流程 ═══════ -->
+
+        <!-- 1. 输入用户名和密码 -->
+        <mxCell id="act_u1" value="" style="fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="33" y="122" width="8" height="25" as="geometry"/>
+        </mxCell>
+        <mxCell id="m1" value="1. 输入用户名、密码" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="37" y="130" as="sourcePoint"/>
+            <mxPoint x="169" y="130" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 2. validate() 自调用 -->
+        <mxCell id="act_l1" value="" style="fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="165" y="140" width="8" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="m2" value="2. validate() 表单校验" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;curved=0;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="173" y="148" as="sourcePoint"/>
+            <Array as="points">
+              <mxPoint x="210" y="148"/>
+              <mxPoint x="210" y="156"/>
+              <mxPoint x="173" y="156"/>
+            </Array>
+            <mxPoint x="173" y="156" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 3. POST login → Axios -->
+        <mxCell id="m3" value="3. POST /webApi/user/login {username, password}" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="173" y="168" as="sourcePoint"/>
+            <mxPoint x="309" y="168" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 4. 拦截器添加头 → Express -->
+        <mxCell id="act_ax1" value="" style="fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="305" y="176" width="8" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="m4" value="4. 添加 Authorization: Bearer &lt;token&gt;" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="313" y="183" as="sourcePoint"/>
+            <mxPoint x="441" y="183" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 5. authMiddleware 白名单放行 -->
+        <mxCell id="act_s1" value="" style="fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="437" y="191" width="8" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="m5" value="5. authMiddleware：白名单放行" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;curved=0;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="445" y="198" as="sourcePoint"/>
+            <Array as="points">
+              <mxPoint x="480" y="198"/>
+              <mxPoint x="480" y="206"/>
+              <mxPoint x="445" y="206"/>
+            </Array>
+            <mxPoint x="445" y="206" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 6. 路由匹配 → Controller -->
+        <mxCell id="m6" value="6. 路由匹配 → UserController.login()" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="445" y="218" as="sourcePoint"/>
+            <mxPoint x="579" y="218" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 7. 查询用户 → MySQL -->
+        <mxCell id="act_c1" value="" style="fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="575" y="226" width="8" height="42" as="geometry"/>
+        </mxCell>
+        <mxCell id="m7" value="7. UserModel.findByUsername(username)" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="583" y="233" as="sourcePoint"/>
+            <mxPoint x="810" y="233" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="act_d1" value="" style="fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="806" y="230" width="8" height="25" as="geometry"/>
+        </mxCell>
+
+        <!-- 8. 返回用户记录 ← MySQL -->
+        <mxCell id="m8" value="8. 返回用户记录" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#555555;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="810" y="248" as="sourcePoint"/>
+            <mxPoint x="583" y="248" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 9. 验证密码（自调用） -->
+        <mxCell id="m9" value="9. 验证密码 user.password === password" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;curved=0;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="583" y="262" as="sourcePoint"/>
+            <Array as="points">
+              <mxPoint x="620" y="262"/>
+              <mxPoint x="620" y="270"/>
+              <mxPoint x="583" y="270"/>
+            </Array>
+            <mxPoint x="583" y="270" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 10. 生成 JWT → JWT 工具 -->
+        <mxCell id="m10" value="10. JWT.generate({id, username, role}, '7d')" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="583" y="282" as="sourcePoint"/>
+            <mxPoint x="707" y="282" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="act_j1" value="" style="fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="703" y="279" width="8" height="18" as="geometry"/>
+        </mxCell>
+
+        <!-- 11. 返回 JWT Token ← JWT -->
+        <mxCell id="m11" value="11. 返回 JWT Token" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#555555;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="707" y="293" as="sourcePoint"/>
+            <mxPoint x="583" y="293" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 12. 返回 {token, 用户信息} → Login.vue -->
+        <mxCell id="m12" value="12. 响应 {code:200, data:{token, id, username, role, ...}}" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="441" y="320" as="sourcePoint"/>
+            <mxPoint x="173" y="320" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 13. 响应拦截器刷新 Token -->
+        <mxCell id="m13" value="13. 响应拦截器：刷新 Token" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#555555;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="309" y="338" as="sourcePoint"/>
+            <mxPoint x="173" y="338" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 14. 保存用户信息 + 跳转 -->
+        <mxCell id="act_l2" value="" style="fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="165" y="345" width="8" height="25" as="geometry"/>
+        </mxCell>
+        <mxCell id="m14" value="14. userInfoStore.updateInfo() → router.push('/home')" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="173" y="352" as="sourcePoint"/>
+            <mxPoint x="37" y="352" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ 登录失败分支 ═══════ -->
+
+        <mxCell id="alt_sep" value="" style="endArrow=none;strokeColor=#9673a6;strokeWidth=0.5;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="25" y="385" as="sourcePoint"/>
+            <mxPoint x="825" y="385" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="alt_fail_cond" value="[登录失败] 校验失败 / 用户名或密码错误 / 账号已禁用" style="text;fontSize=9;fontFamily=Helvetica;fontColor=#D71921;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="18" y="388" width="300" height="14" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m_f1" value="F1. 返回错误提示 [ERROR] 前端校验失败" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#D71921;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="169" y="410" as="sourcePoint"/>
+            <mxPoint x="37" y="410" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_f2" value="F2. 服务端返回 {code:401, message:'用户名或密码错误'}" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#D71921;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="441" y="428" as="sourcePoint"/>
+            <mxPoint x="37" y="428" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_f3" value="F3. 服务端返回 {code:403, message:'账号已被禁用'}" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#D71921;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="441" y="446" as="sourcePoint"/>
+            <mxPoint x="37" y="446" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ 注释 ═══════ -->
+
+        <mxCell id="note_auth" value="登录接口属于白名单&#xa;不需要 JWT 即可访问&#xa;但拦截器仍会解析已有 Token" style="shape=note;whiteSpace=wrap;backgroundOutline=1;size=12;fillColor=#FFF;strokeColor=#9673a6;fontSize=9;fontFamily=Helvetica;align=left;spacingLeft=4;spacingRight=4;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="620" y="155" width="175" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="note_jwt" value="JWT 有效期 7 天&#xa;密钥通过 jsonwebtoken 签发&#xa;Payload: {id, username, role}" style="shape=note;whiteSpace=wrap;backgroundOutline=1;size=12;fillColor=#FFF;strokeColor=#82b366;fontSize=9;fontFamily=Helvetica;align=left;spacingLeft=4;spacingRight=4;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="620" y="280" width="170" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════ 图例 ═══════ -->
+
+        <mxCell id="leg_bg" value="" style="rounded=1;whiteSpace=wrap;fillColor=#fafafa;strokeColor=#cccccc;" vertex="1" parent="1">
+          <mxGeometry x="10" y="500" width="360" height="72" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_t" value="图例" style="text;fontSize=10;fontStyle=1;align=left;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="20" y="504" width="30" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_l1" value="" style="endArrow=open;endSize=7;strokeColor=#333;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="22" y="526" as="sourcePoint"/>
+            <mxPoint x="58" y="526" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg_s1" value="实线：同步调用 / 请求" style="text;fontSize=9;fontFamily=Helvetica;align=left;" vertex="1" parent="1">
+          <mxGeometry x="65" y="519" width="120" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_l2" value="" style="endArrow=open;endSize=7;dashed=1;strokeColor=#555;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="22" y="544" as="sourcePoint"/>
+            <mxPoint x="58" y="544" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg_s2" value="虚线：返回响应 / 回调" style="text;fontSize=9;fontFamily=Helvetica;align=left;" vertex="1" parent="1">
+          <mxGeometry x="65" y="537" width="120" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_bar" value="" style="fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="28" y="556" width="6" height="10" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_s3" value="细长矩形：激活条" style="text;fontSize=9;fontFamily=Helvetica;align=left;" vertex="1" parent="1">
+          <mxGeometry x="65" y="555" width="100" height="14" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

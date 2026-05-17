@@ -12,10 +12,10 @@
 
             <!-- Secondary: form -->
             <el-form
-                ref="LoginFormRef"
-                :model="LoginForm"
+                ref="formRef"
+                :model="form"
                 status-icon
-                :rules="Loginrules"
+                :rules="formRules"
                 label-position="top"
                 class="login-form"
             >
@@ -24,7 +24,7 @@
                         <span class="field-label">USERNAME</span>
                     </template>
                     <el-input
-                        v-model="LoginForm.username"
+                        v-model="form.username"
                         autocomplete="off"
                         placeholder="输入用户名"
                         size="large"
@@ -35,12 +35,23 @@
                         <span class="field-label">PASSWORD</span>
                     </template>
                     <el-input
-                        v-model="LoginForm.password"
+                        v-model="form.password"
                         type="password"
                         autocomplete="off"
                         placeholder="输入密码"
                         size="large"
                         show-password
+                    />
+                </el-form-item>
+                <el-form-item v-if="isRegister" prop="inviteCode">
+                    <template #label>
+                        <span class="field-label">INVITE CODE</span>
+                    </template>
+                    <el-input
+                        v-model="form.inviteCode"
+                        autocomplete="off"
+                        placeholder="输入邀请码"
+                        size="large"
                     />
                 </el-form-item>
                 <el-form-item class="submit-item">
@@ -49,10 +60,15 @@
                         class="login-btn"
                         @click="submitForm()"
                     >
-                        SIGN IN
+                        {{ isRegister ? 'SIGN UP' : 'SIGN IN' }}
                     </el-button>
                 </el-form-item>
-                <div v-if="statusMsg" class="login-status">{{ statusMsg }}</div>
+                <div class="toggle-mode">
+                    <span class="toggle-link" @click="toggleMode">
+                        {{ isRegister ? '已有账号？去登录' : '没有账号？去注册' }}
+                    </span>
+                </div>
+                <div v-if="statusMsg" class="login-status" :class="{ success: isSuccess }">{{ statusMsg }}</div>
             </el-form>
 
             <!-- Tertiary: footer -->
@@ -66,19 +82,37 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from '../util/axios.config.js'
 import useUserInfoStore from '../store/userInfo.js'
 
-const LoginForm = reactive({
+const INVITE_CODES = {
+    '123456': 1, // 管理员
+    '654321': 2, // 企业
+}
+
+const isRegister = ref(false)
+const isSuccess = ref(false)
+const form = reactive({
     username: '',
-    password: ''
+    password: '',
+    inviteCode: ''
 })
-const LoginFormRef = ref()
+const formRef = ref()
 const statusMsg = ref('')
 
-const Loginrules = reactive({
+const validateInviteCode = (rule, value, callback) => {
+    if (!value) {
+        callback(new Error('请输入邀请码'))
+    } else if (!(value in INVITE_CODES)) {
+        callback(new Error('邀请码不正确'))
+    } else {
+        callback()
+    }
+}
+
+const formRules = computed(() => ({
     username: [
         { required: true, message: '请输入用户名', trigger: 'blur' },
         { min: 3, max: 20, message: '长度在 3 到 20 个字符之间', trigger: 'blur' }
@@ -86,25 +120,68 @@ const Loginrules = reactive({
     password: [
         { required: true, message: '请输入密码', trigger: 'blur' },
         { min: 6, max: 20, message: '长度在 6 到 20 个字符之间', trigger: 'blur' }
-    ]
-})
+    ],
+    ...(isRegister.value ? { inviteCode: [{ validator: validateInviteCode, trigger: 'blur' }] } : {})
+}))
 
 const router = useRouter()
 const userInfoStore = useUserInfoStore()
 
+const toggleMode = () => {
+    isRegister.value = !isRegister.value
+    statusMsg.value = ''
+    isSuccess.value = false
+    form.inviteCode = ''
+    formRef.value?.clearValidate()
+}
+
 const submitForm = () => {
-    LoginFormRef.value.validate((valid) => {
-        if (valid) {
-            statusMsg.value = ''
-            axios.post("/adminApi/user/login", LoginForm).then(res => {
+    formRef.value.validate((valid) => {
+        if (!valid) return
+        statusMsg.value = ''
+
+        if (isRegister.value) {
+            // 注册
+            axios.post("/adminApi/user/register", {
+                username: form.username,
+                password: form.password,
+                role: INVITE_CODES[form.inviteCode]
+            }).then(res => {
+                if (res.data.code === 200) {
+                    isSuccess.value = true
+                    statusMsg.value = '注册成功，请登录'
+                    isRegister.value = false
+                    form.inviteCode = ''
+                } else {
+                    isSuccess.value = false
+                    statusMsg.value = '[ERROR] ' + res.data.message
+                    setTimeout(() => { statusMsg.value = '' }, 3000)
+                }
+            }).catch(() => {
+                isSuccess.value = false
+                statusMsg.value = '[ERROR] 注册请求失败'
+                setTimeout(() => { statusMsg.value = '' }, 3000)
+            })
+        } else {
+            // 登录
+            axios.post("/adminApi/user/login", {
+                username: form.username,
+                password: form.password
+            }).then(res => {
                 if (res.data.code === 200) {
                     userInfoStore.setUserInfo(res.data.data)
                     router.push('/')
+                } else if (res.data.code === 403) {
+                    isSuccess.value = false
+                    statusMsg.value = '[ERROR] ' + res.data.message
+                    setTimeout(() => { statusMsg.value = '' }, 4000)
                 } else {
+                    isSuccess.value = false
                     statusMsg.value = '[ERROR] 用户名或密码不正确'
                     setTimeout(() => { statusMsg.value = '' }, 3000)
                 }
-            }).catch(error => {
+            }).catch(() => {
+                isSuccess.value = false
                 statusMsg.value = '[ERROR] 登录请求失败'
                 setTimeout(() => { statusMsg.value = '' }, 3000)
             })
@@ -296,6 +373,24 @@ const submitForm = () => {
     letter-spacing: 0.04em;
 }
 
+.toggle-mode {
+    text-align: center;
+    margin-top: 4px;
+    margin-bottom: 8px;
+}
+
+.toggle-link {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    color: #666666;
+    cursor: pointer;
+    transition: color 200ms ease;
+
+    &:hover {
+        color: #E8E8E8;
+    }
+}
+
 .login-status {
     font-family: 'Space Mono', monospace;
     font-size: 12px;
@@ -303,5 +398,9 @@ const submitForm = () => {
     color: #D71921;
     text-align: center;
     margin-top: 4px;
+
+    &.success {
+        color: #4CAF50;
+    }
 }
 </style>

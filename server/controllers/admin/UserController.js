@@ -1,6 +1,27 @@
 const UserService = require('../../services/admin/UserService');
 const JWT = require('../../util/JWT');
 const UserController = {
+    // 用户注册（管理员）
+    register: async (req, res) => {
+        try {
+            const { username, password, role } = req.body;
+            if (!username || username.length < 3 || username.length > 20) {
+                return res.status(200).json({ code: 400, message: '用户名长度必须在3到20个字符之间' });
+            }
+            if (!password || password.length < 6 || password.length > 20) {
+                return res.status(200).json({ code: 400, message: '密码长度必须在6到20个字符之间' });
+            }
+            const existing = await UserService.getUser();
+            if (existing && existing.some(u => u.username === username)) {
+                return res.status(200).json({ code: 400, message: '用户名已存在' });
+            }
+            await UserService.addUser({ username, password, role: Number(role) || 1, status: 1 });
+            res.status(200).json({ code: 200, message: '注册成功' });
+        } catch (error) {
+            console.error('注册失败:', error);
+            res.status(500).json({ code: 500, message: '服务器内部错误' });
+        }
+    },
     // 用户登录
     login: async (req, res) => {
         try {
@@ -20,6 +41,13 @@ const UserController = {
                 return res.status(200).json({
                     code: 401,
                     message: '用户名或密码错误'
+                });
+            }
+            // 3.1 毕业生(role=0)不能登录管理端
+            if (userInfo.role === 0) {
+                return res.status(200).json({
+                    code: 403,
+                    message: '毕业生账号无法登录管理端，请使用客户端登录'
                 });
             }
             // 4. 生成JWT token

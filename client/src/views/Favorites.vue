@@ -1,43 +1,72 @@
 <template>
     <div class="fav-page">
         <div class="page-hero">
+            <router-link to="/home" class="back-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                返回首页
+            </router-link>
             <span class="hero-label">FAVORITES</span>
             <h1 class="hero-title">我的收藏</h1>
             <span class="hero-count" v-if="favorites.length > 0">{{ favorites.length }} ITEMS</span>
         </div>
 
-        <div class="fav-list" v-if="favorites.length > 0">
-            <div
-                v-for="fav in favorites"
-                :key="fav.id"
-                class="fav-row"
-                @click="goDetail(fav)"
-            >
-                <span class="fav-type" :class="fav.target_type">
-                    {{ fav.target_type === 'job' ? '岗位' : '资讯' }}
-                </span>
-                <span class="fav-title">{{ fav.title || `ID: ${fav.target_id}` }}</span>
-                <span class="fav-time">{{ formatDate(fav.created_at) }}</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="fav-arrow">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
+        <template v-if="jobFavorites.length > 0">
+            <h2 class="section-title">岗位 <span class="section-count">{{ jobFavorites.length }}</span></h2>
+            <div class="fav-list">
+                <div
+                    v-for="fav in jobFavorites"
+                    :key="fav.id"
+                    class="fav-row"
+                    @click="goDetail(fav)"
+                >
+                    <span class="fav-type job">岗位</span>
+                    <span class="fav-title">{{ fav.title || `ID: ${fav.target_id}` }}</span>
+                    <span class="fav-time">{{ formatDate(fav.created_at) }}</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="fav-arrow">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
             </div>
-        </div>
+        </template>
 
-        <div v-else class="empty-state">
+        <template v-if="newsFavorites.length > 0">
+            <h2 class="section-title">资讯 <span class="section-count">{{ newsFavorites.length }}</span></h2>
+            <div class="fav-list">
+                <div
+                    v-for="fav in newsFavorites"
+                    :key="fav.id"
+                    class="fav-row"
+                    @click="goDetail(fav)"
+                >
+                    <span class="fav-type news">资讯</span>
+                    <span class="fav-title">{{ fav.title || `ID: ${fav.target_id}` }}</span>
+                    <span class="fav-time">{{ formatDate(fav.created_at) }}</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="fav-arrow">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+            </div>
+        </template>
+
+        <div v-if="favorites.length === 0" class="empty-state">
             <span class="empty-label">NO FAVORITES YET</span>
             <span class="empty-desc">收藏岗位或资讯后会在这里显示</span>
         </div>
     </div>
+    <ChatBot />
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import ChatBot from '../components/ChatBot.vue'
 import { useRouter } from 'vue-router'
 import axios from '@/util/axios.config.js'
 
 const router = useRouter()
 const favorites = ref([])
+//数据分组
+const jobFavorites = computed(() => favorites.value.filter(f => f.target_type === 'job'))
+const newsFavorites = computed(() => favorites.value.filter(f => f.target_type === 'news'))
 
 const formatDate = (dateStr) => {
     if (!dateStr) return ''
@@ -77,6 +106,21 @@ onMounted(async () => {
     flex-wrap: wrap;
 }
 
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--text-disabled);
+    width: 100%;
+    margin-bottom: var(--space-xs);
+    transition: color 150ms;
+}
+
+.back-link:hover { color: var(--text-primary); }
+
 .hero-label {
     font-family: var(--font-mono);
     font-size: 11px;
@@ -99,6 +143,26 @@ onMounted(async () => {
     font-family: var(--font-mono);
     font-size: 11px;
     color: var(--text-disabled);
+}
+
+/* ── Section ── */
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-display);
+    margin: var(--space-xl) 0 var(--space-md);
+    letter-spacing: -0.01em;
+}
+
+.section-title:first-of-type {
+    margin-top: 0;
+}
+
+.section-count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-disabled);
+    font-weight: 400;
 }
 
 /* ── List ── */
@@ -140,6 +204,11 @@ onMounted(async () => {
 
 .fav-type.job {
     color: var(--text-secondary);
+    border-color: var(--border-visible);
+}
+
+.fav-type.news {
+    color: var(--accent, var(--text-secondary));
     border-color: var(--border-visible);
 }
 

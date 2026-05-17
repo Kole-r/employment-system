@@ -17,7 +17,7 @@
                         <img :src="avatarUrl" alt="avatar" class="avatar-img" />
                     </div>
                     <span class="profile-name">{{ userInfo.$state.real_name || userInfo.$state.username }}</span>
-                    <span class="profile-role-tag">{{ role === 1 ? '管理员' : '毕业生' }}</span>
+                    <span class="profile-role-tag">{{ role === 1 ? '管理员' : role === 2 ? '企业人员' : '毕业生' }}</span>
                 </div>
                 <div class="profile-stats">
                     <div class="pstat-row">
@@ -26,7 +26,7 @@
                     </div>
                     <div class="pstat-row">
                         <span class="pstat-label">ROLE</span>
-                        <span class="pstat-value">{{ role === 1 ? '管理员' : '毕业生' }}</span>
+                        <span class="pstat-value">{{ role === 1 ? '管理员' : role === 2 ? '企业人员' : '毕业生' }}</span>
                     </div>
                     <div class="pstat-row">
                         <span class="pstat-label">PHONE</span>

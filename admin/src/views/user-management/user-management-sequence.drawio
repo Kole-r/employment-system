@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" agent="Claude" version="21.0.0">
+  <diagram name="添加用户时序图">
+    <mxGraphModel dx="900" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="1250" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="添加用户 — 时序图" style="text;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="250" y="15" width="300" height="26" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════ 参与者 ═══════ -->
+
+        <mxCell id="box_admin" value="" style="shape=actor;size=18;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="48" y="52" width="26" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="lbl_admin" value="管理员" style="text;fontSize=10;fontStyle=1;align=center;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="28" y="84" width="66" height="16" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="box_page" value="UserAdd.vue" style="rounded=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="175" y="55" width="85" height="26" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="box_upload" value="Upload.vue" style="rounded=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="355" y="55" width="85" height="26" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="box_server" value="Express&#xa;UserController" style="rounded=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="530" y="52" width="105" height="32" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="box_db" value="MySQL&#xa;Database" style="shape=cylinder3;whiteSpace=wrap;boundedLbl=1;backgroundOutline=1;size=8;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="730" y="52" width="100" height="32" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════ 生命线 ═══════ -->
+
+        <mxCell id="ll_admin" value="" style="endArrow=none;dashed=1;strokeColor=#6c8ebf;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="61" y="100" as="sourcePoint"/>
+            <mxPoint x="61" y="1210" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_page" value="" style="endArrow=none;dashed=1;strokeColor=#d6b656;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="217" y="81" as="sourcePoint"/>
+            <mxPoint x="217" y="1210" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_upload" value="" style="endArrow=none;dashed=1;strokeColor=#d6b656;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="397" y="81" as="sourcePoint"/>
+            <mxPoint x="397" y="1210" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_server" value="" style="endArrow=none;dashed=1;strokeColor=#82b366;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="582" y="84" as="sourcePoint"/>
+            <mxPoint x="582" y="1210" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_db" value="" style="endArrow=none;dashed=1;strokeColor=#9673a6;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="780" y="84" as="sourcePoint"/>
+            <mxPoint x="780" y="1210" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ 1. 填写表单 ═══════ -->
+
+        <mxCell id="act_a1" value="" style="fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="57" y="115" width="8" height="35" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m1" value="1. 填写用户信息（用户名、密码、角色等）" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="61" y="125" as="sourcePoint"/>
+            <mxPoint x="217" y="125" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="act_p1" value="" style="fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="213" y="120" width="8" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════ 2. 选择头像 ═══════ -->
+
+        <mxCell id="m2" value="2. 点击上传头像，选择图片文件" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="61" y="155" as="sourcePoint"/>
+            <mxPoint x="397" y="155" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="act_u1" value="" style="fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="393" y="150" width="8" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m2_1" value="2.1 返回文件对象 File" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#555555;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="397" y="172" as="sourcePoint"/>
+            <mxPoint x="217" y="172" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m2_2" value="2.2 生成预览 URL.createObjectURL(file)" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#555555;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="217" y="188" as="sourcePoint"/>
+            <mxPoint x="61" y="188" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ 3. 点击提交 ═══════ -->
+
+        <mxCell id="act_a2" value="" style="fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="57" y="218" width="8" height="28" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m3" value="3. 点击「添加用户」→ submitForm()" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="61" y="228" as="sourcePoint"/>
+            <mxPoint x="217" y="228" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ 4. 内部校验（自调用） ═══════ -->
+
+        <mxCell id="act_p2" value="" style="fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="213" y="242" width="8" height="35" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m4" value="4. 内部调用 validate() 校验表单" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;curved=0;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="221" y="252" as="sourcePoint"/>
+            <Array as="points">
+              <mxPoint x="265" y="252"/>
+              <mxPoint x="265" y="268"/>
+              <mxPoint x="221" y="268"/>
+            </Array>
+            <mxPoint x="221" y="268" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ [alt] 校验分支 ═══════ -->
+
+        <mxCell id="alt1_bg" value="" style="fillColor=none;strokeColor=#9673a6;strokeWidth=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="282" width="520" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="alt1_tag" value="alt" style="text;fontSize=10;fontStyle=1;fontFamily=Helvetica;fontColor=#9673a6;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="174" y="282" width="25" height="16" as="geometry"/>
+        </mxCell>
+        <mxCell id="alt1_div" value="" style="endArrow=none;strokeColor=#9673a6;strokeWidth=0.5;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="185" y="345" as="sourcePoint"/>
+            <mxPoint x="675" y="345" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="alt1_l1" value="[校验失败：用户名 &lt; 3字符 / 密码 &lt; 6字符 / 未上传头像]" style="text;fontSize=9;fontFamily=Helvetica;fontColor=#D71921;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="180" y="300" width="360" height="14" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="act_p3" value="" style="fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="213" y="315" width="8" height="25" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m4_1" value="4.1 返回错误 errors.username / errors.password / errors.avatar" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#D71921;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="217" y="332" as="sourcePoint"/>
+            <mxPoint x="61" y="332" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="alt1_l2" value="[校验通过]" style="text;fontSize=9;fontFamily=Helvetica;fontColor=#3DDC84;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="180" y="348" width="70" height="14" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="act_p4" value="" style="fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="213" y="365" width="8" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m4_2" value="4.2 构建 FormData，调用 upload() 工具函数" style="endArrow=open;endSize=9;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#3DDC84;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="217" y="380" as="sourcePoint"/>
+            <mxPoint x="582" y="380" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ 5. 发送到后端 ═══════ -->
+
+        <mxCell id="m5" value="5. POST /adminApi/user/add FormData" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="217" y="420" as="sourcePoint"/>
+            <mxPoint x="582" y="420" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="act_s1" value="" style="fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="578" y="415" width="8" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m5_1" value="5.1 multer 解析文件 → public/avataruploads/" style="endArrow=open;endSize=9;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#555555;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="582" y="440" as="sourcePoint"/>
+            <mxPoint x="780" y="440" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="act_d1" value="" style="fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="776" y="435" width="8" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m6" value="6. INSERT INTO users (...)" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="582" y="460" as="sourcePoint"/>
+            <mxPoint x="780" y="460" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m6_1" value="6.1 ResultSet" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#555555;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="780" y="470" as="sourcePoint"/>
+            <mxPoint x="582" y="470" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ 7. 返回结果 ═══════ -->
+
+        <mxCell id="m7" value="7. { code: 200, message: &quot;添加成功&quot; }" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="582" y="495" as="sourcePoint"/>
+            <mxPoint x="217" y="495" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m8" value="8. 显示提示「[SAVED]」" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#555555;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="217" y="515" as="sourcePoint"/>
+            <mxPoint x="61" y="515" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m9" value="9. router.push('/user-management/UserList')" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#555555;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="217" y="535" as="sourcePoint"/>
+            <mxPoint x="61" y="535" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ [alt] 后端错误 ═══════ -->
+
+        <mxCell id="alt2_bg" value="" style="fillColor=none;strokeColor=#9673a6;strokeWidth=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="555" width="520" height="55" as="geometry"/>
+        </mxCell>
+        <mxCell id="alt2_tag" value="alt" style="text;fontSize=10;fontStyle=1;fontFamily=Helvetica;fontColor=#9673a6;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="174" y="555" width="25" height="16" as="geometry"/>
+        </mxCell>
+        <mxCell id="alt2_l1" value="[后端返回错误：400 参数格式不对 / 500 服务器异常]" style="text;fontSize=9;fontFamily=Helvetica;fontColor=#D71921;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="180" y="572" width="310" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="m10" value="10. 显示错误「[ERROR] 提交失败」" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#D71921;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="217" y="590" as="sourcePoint"/>
+            <mxPoint x="61" y="590" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ 注释 ═══════ -->
+
+        <mxCell id="note1" value="所有 API 请求通过 Axios 拦截器&#xa;自动携带 Authorization: Bearer &lt;JWT&gt;&#xa;Token 登录时获取，1h 有效期" style="shape=note;whiteSpace=wrap;backgroundOutline=1;size=12;fillColor=#FFF;strokeColor=#9673a6;fontSize=9;fontFamily=Helvetica;align=left;spacingLeft=4;spacingRight=4;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="700" y="410" width="180" height="58" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="note2" value="校验规则（validate()）：&#xa;• 用户名：3 ~ 20 字符&#xa;• 密码：6 ~ 20 字符&#xa;• 头像：必填" style="shape=note;whiteSpace=wrap;backgroundOutline=1;size=12;fillColor=#FFF;strokeColor=#d6b656;fontSize=9;fontFamily=Helvetica;align=left;spacingLeft=4;spacingRight=4;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="700" y="282" width="175" height="58" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════ 图例 ═══════ -->
+
+        <mxCell id="leg_bg" value="" style="rounded=1;whiteSpace=wrap;fillColor=#fafafa;strokeColor=#cccccc;" vertex="1" parent="1">
+          <mxGeometry x="40" y="640" width="360" height="72" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_t" value="图例" style="text;fontSize=10;fontStyle=1;align=left;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="50" y="644" width="30" height="16" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_l1" value="" style="endArrow=open;endSize=7;strokeColor=#333;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="52" y="668" as="sourcePoint"/>
+            <mxPoint x="88" y="668" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg_s1" value="实线：同步调用 / 请求" style="text;fontSize=9;fontFamily=Helvetica;align=left;" vertex="1" parent="1">
+          <mxGeometry x="95" y="660" width="130" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_l2" value="" style="endArrow=open;endSize=7;dashed=1;strokeColor=#555;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="52" y="686" as="sourcePoint"/>
+            <mxPoint x="88" y="686" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg_s2" value="虚线：返回响应 / 回调" style="text;fontSize=9;fontFamily=Helvetica;align=left;" vertex="1" parent="1">
+          <mxGeometry x="95" y="678" width="130" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_bar" value="" style="fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="58" y="698" width="6" height="10" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_s3" value="细长矩形：激活条" style="text;fontSize=9;fontFamily=Helvetica;align=left;" vertex="1" parent="1">
+          <mxGeometry x="95" y="696" width="100" height="14" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

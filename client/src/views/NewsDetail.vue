@@ -9,6 +9,12 @@
                     </svg>
                 </router-link>
                 <span class="detail-cat">{{ getCategoryLabel(news.category) }}</span>
+                <div style="flex:1"></div>
+                                                                <button class="fav-btn" :class="{ active: isFavorited }" @click="toggleFav">
+                    <svg width="18" height="18" viewBox="0 0 24 24" :fill="isFavorited ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="1.5">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                </button>
             </div>
 
             <!-- Title -->
@@ -44,15 +50,18 @@
             <span class="loading-text">[LOADING...]</span>
         </div>
     </div>
+    <ChatBot />
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import ChatBot from '../components/ChatBot.vue'
 import { useRoute } from 'vue-router'
 import axios from '@/util/axios.config.js'
 
 const route = useRoute()
 const news = ref(null)
+const isFavorited = ref(false)
 const categoryMap = { 1: '政策解读', 2: '行业动态', 3: '求职技巧', 4: '校园招聘' }
 const getCategoryLabel = (val) => categoryMap[val] || '资讯'
 
@@ -65,10 +74,24 @@ const formatDate = (dateStr) => {
     return `${y}.${m}.${day}`
 }
 
+const toggleFav = async () => {
+    try {
+        const res = await axios.post('/webApi/user/favorite', {
+            target_type: 'news',
+            target_id: Number(route.params.id)
+        })
+        if (res.data.code === 200) isFavorited.value = res.data.data.favorited
+    } catch (e) { console.error(e) }
+}
+
 onMounted(async () => {
     try {
-        const res = await axios.get(`/webApi/news/detail/${route.params.id}`)
-        if (res.data.code === 200) news.value = res.data.data
+        const [detailRes, favRes] = await Promise.all([
+            axios.get(`/webApi/news/detail/${route.params.id}`),
+            axios.get(`/webApi/user/favorite/check?target_type=news&target_id=${route.params.id}`)
+        ])
+        if (detailRes.data.code === 200) news.value = detailRes.data.data
+        if (favRes.data.code === 200) isFavorited.value = favRes.data.data.favorited
     } catch (e) { console.error(e) }
 })
 </script>
@@ -115,6 +138,32 @@ onMounted(async () => {
     padding: 3px 12px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
+}
+
+.fav-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-disabled);
+    cursor: pointer;
+    transition: all 150ms ease-out;
+    padding: 0;
+}
+
+.fav-btn:hover {
+    border-color: var(--border-visible);
+    color: var(--text-secondary);
+}
+
+.fav-btn.active {
+    color: #e74c3c;
+    border-color: rgba(231, 76, 60, 0.3);
+    background: rgba(231, 76, 60, 0.05);
 }
 
 /* ── Title ── */

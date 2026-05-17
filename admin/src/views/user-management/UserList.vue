@@ -13,7 +13,11 @@
                 </div>
                 <div class="stat-block">
                     <span class="stat-num">{{ tableData.filter(u => u.role === 1).length }}</span>
-                    <span class="stat-label">ADMINS</span>
+                    <span class="stat-label">TEACHERS</span>
+                </div>
+                <div class="stat-block">
+                    <span class="stat-num">{{ tableData.filter(u => u.role === 2).length }}</span>
+                    <span class="stat-label">ENTERPRISE</span>
                 </div>
                 <div class="stat-block">
                     <span class="stat-num">{{ tableData.filter(u => u.role === 0).length }}</span>
@@ -57,8 +61,8 @@
                             <span class="cell-text">{{ item.real_name || '—' }}</span>
                         </td>
                         <td class="col-role">
-                            <span :class="['role-pill', item.role === 1 ? 'admin' : 'graduate']">
-                                {{ item.role === 1 ? '管理员' : '毕业生' }}
+                            <span :class="['role-pill', item.role === 1 ? 'admin' : item.role === 2 ? 'enterprise' : 'graduate']">
+                                {{ item.role === 1 ? '管理员' : item.role === 2 ? '企业人员' : '毕业生' }}
                             </span>
                         </td>
                         <td class="col-major">
@@ -114,6 +118,7 @@
                                     <div class="select-wrap">
                                         <select v-model="userForm.role" class="form-select">
                                             <option value="1">管理员</option>
+                                            <option value="2">企业人员</option>
                                             <option value="0">毕业生</option>
                                         </select>
                                         <span class="select-arrow">&#9662;</span>
@@ -508,6 +513,10 @@ $blue: #5B9BF6;
     &.admin {
         border-color: $accent;
         color: $accent;
+    }
+    &.enterprise {
+        border-color: $amber;
+        color: $amber;
     }
     &.graduate {
         border-color: $blue;

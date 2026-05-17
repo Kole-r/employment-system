@@ -7,6 +7,7 @@ const upload = multer({ dest: 'public/avataruploads/' })
 
 // 用户路由
 UserRouter.post("/user/login", UserController.login);// 登录接口
+UserRouter.post("/user/register", UserController.register);// 注册接口
 UserRouter.post("/user/upload", upload.single('file'), UserController.upload);// 上传头像接口
 UserRouter.post("/user/add", upload.single('file'), UserController.addUser);// 添加用户接口
 UserRouter.get("/user/list", UserController.getUser);// 用户列表接口

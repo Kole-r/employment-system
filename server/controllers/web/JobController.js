@@ -1,5 +1,6 @@
 const JobModel = require('../../models/JobModel');
 const BehaviorModel = require('../../models/BehaviorModel');
+const syncUserPreferences = require('../../services/web/syncPreferences');
 
 const JobController = {
   // 获取招聘中的岗位列表
@@ -28,10 +29,11 @@ const JobController = {
         return res.status(404).json({ code: 404, message: '岗位不存在' });
       }
 
-      // 记录用户行为
+      // 记录用户行为并同步偏好
       const userId = req.user?.id;
       if (userId) {
         await BehaviorModel.create(userId, 'job', req.params.id, 'view');
+        await syncUserPreferences(userId, job.city, job.job_type);
       }
 
       res.status(200).json({ code: 200, data: job });

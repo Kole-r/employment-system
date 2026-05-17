@@ -1,5 +1,7 @@
 const NewsService = require('../../services/admin/NewsService');
+const NewsModel = require('../../models/NewsModel');
 const JWT = require('../../util/JWT');
+const { embedNews, deleteDocument } = require('../../util/syncToAI');
 
 const NewsController = {
   // 获取新闻列表或单个新闻
@@ -111,6 +113,8 @@ const NewsController = {
       };
 
       const newsId = await NewsService.addNews(newsData);
+      // 同步到 ChromaDB 向量数据库
+      embedNews({ ...newsData, id: newsId });
 
       res.status(200).json({
         code: 200,
@@ -167,6 +171,9 @@ const NewsController = {
 
       // 调用 Service 层更新新闻
       await NewsService.updateNews(newsId, updateData);
+      // 获取更新后的完整数据，同步到 ChromaDB
+      const updatedNews = await NewsModel.findById(newsId);
+      if (updatedNews) embedNews(updatedNews);
 
       res.status(200).json({
         code: 200,
@@ -193,6 +200,8 @@ const NewsController = {
       }
 
       await NewsService.deleteNews(newsId);
+      // 从 ChromaDB 删除对应文档
+      deleteDocument('news', newsId);
       res.status(200).json({
         code: 200,
         message: '新闻删除成功'

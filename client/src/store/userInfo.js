@@ -8,9 +8,15 @@ export const useUserInfoStore = defineStore('userInfo', {
     role: 0,
     real_name: '',
     avatar: '',
+    phone: '',
+    email: '',
     major: '',
     degree: '',
+    graduation_year: '',
     university: '',
+    city_preference: '',
+    job_preference: '',
+    bio: '',
   }),
   actions: {
     updateInfo(info) {

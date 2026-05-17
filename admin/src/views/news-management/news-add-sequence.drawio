@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" agent="Claude" version="21.0.0">
+  <diagram name="添加新闻时序图">
+    <mxGraphModel dx="1000" dy="750" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="950" pageHeight="1350" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="添加新闻 — 时序图" style="text;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="270" y="15" width="300" height="26" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════ 参与者 ═══════ -->
+
+        <mxCell id="box_admin" value="" style="shape=actor;size=18;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="38" y="52" width="26" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="lbl_admin" value="管理员" style="text;fontSize=10;fontStyle=1;align=center;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="18" y="84" width="66" height="16" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="box_page" value="NewsAdd.vue" style="rounded=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="145" y="55" width="90" height="26" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="box_editor" value="Editor.vue" style="rounded=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="305" y="55" width="80" height="26" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="box_upload" value="Upload.vue" style="rounded=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="450" y="55" width="80" height="26" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="box_server" value="Express&#xa;NewsController" style="rounded=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="590" y="52" width="110" height="32" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="box_db" value="MySQL&#xa;Database" style="shape=cylinder3;whiteSpace=wrap;boundedLbl=1;backgroundOutline=1;size=8;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="770" y="52" width="100" height="32" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════ 生命线 ═══════ -->
+
+        <mxCell id="ll_admin" value="" style="endArrow=none;dashed=1;strokeColor=#6c8ebf;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="51" y="100" as="sourcePoint"/>
+            <mxPoint x="51" y="1310" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_page" value="" style="endArrow=none;dashed=1;strokeColor=#d6b656;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="190" y="81" as="sourcePoint"/>
+            <mxPoint x="190" y="1310" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_editor" value="" style="endArrow=none;dashed=1;strokeColor=#d6b656;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="345" y="81" as="sourcePoint"/>
+            <mxPoint x="345" y="1310" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_upload" value="" style="endArrow=none;dashed=1;strokeColor=#d6b656;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="490" y="81" as="sourcePoint"/>
+            <mxPoint x="490" y="1310" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_server" value="" style="endArrow=none;dashed=1;strokeColor=#82b366;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="645" y="84" as="sourcePoint"/>
+            <mxPoint x="645" y="1310" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_db" value="" style="endArrow=none;dashed=1;strokeColor=#9673a6;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="820" y="84" as="sourcePoint"/>
+            <mxPoint x="820" y="1310" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ 1. 填写标题 ═══════ -->
+
+        <mxCell id="act_a1" value="" style="fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="47" y="115" width="8" height="35" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m1" value="1. 填写新闻标题" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="51" y="125" as="sourcePoint"/>
+            <mxPoint x="190" y="125" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="act_p1" value="" style="fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="186" y="120" width="8" height="130" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════ 2. 编辑内容 ═══════ -->
+
+        <mxCell id="m2" value="2. 在富文本编辑器中撰写新闻内容" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="51" y="155" as="sourcePoint"/>
+            <mxPoint x="345" y="155" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="act_e1" value="" style="fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="341" y="150" width="8" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m2_1" value="2.1 emit('event', content) 返回 HTML 内容" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#555555;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="345" y="172" as="sourcePoint"/>
+            <mxPoint x="190" y="172" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ 3. 选择类别 ═══════ -->
+
+        <mxCell id="m3" value="3. 选择新闻类别（政策解读/行业动态/求职技巧/校园招聘）" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="51" y="200" as="sourcePoint"/>
+            <mxPoint x="190" y="200" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ 4. 上传封面 ═══════ -->
+
+        <mxCell id="m4" value="4. 选择封面图片" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="51" y="225" as="sourcePoint"/>
+            <mxPoint x="490" y="225" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="act_u1" value="" style="fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="486" y="220" width="8" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m4_1" value="4.1 返回文件对象 File" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#555555;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="490" y="242" as="sourcePoint"/>
+            <mxPoint x="190" y="242" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m4_2" value="4.2 生成封面预览 URL.createObjectURL(file)" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#555555;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="190" y="258" as="sourcePoint"/>
+            <mxPoint x="51" y="258" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ 5. 点击提交 ═══════ -->
+
+        <mxCell id="act_a2" value="" style="fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="47" y="280" width="8" height="28" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m5" value="5. 点击「保存草稿」或「发布新闻」" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="51" y="290" as="sourcePoint"/>
+            <mxPoint x="190" y="290" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="act_p2" value="" style="fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="186" y="285" width="8" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════ [alt] 草稿/发布 ═══════ -->
+
+        <mxCell id="alt0_bg" value="" style="fillColor=none;strokeColor=#9673a6;strokeWidth=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="310" width="540" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="alt0_tag" value="alt" style="text;fontSize=10;fontStyle=1;fontFamily=Helvetica;fontColor=#9673a6;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="154" y="310" width="25" height="16" as="geometry"/>
+        </mxCell>
+        <mxCell id="alt0_div" value="" style="endArrow=none;strokeColor=#9673a6;strokeWidth=0.5;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="165" y="335" as="sourcePoint"/>
+            <mxPoint x="675" y="335" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="alt0_l1" value="[保存草稿 → isPublish = 0]" style="text;fontSize=9;fontFamily=Helvetica;fontColor=#888888;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="160" y="320" width="190" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="alt0_l2" value="[发布新闻 → isPublish = 1]" style="text;fontSize=9;fontFamily=Helvetica;fontColor=#3DDC84;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="160" y="338" width="180" height="14" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════ 6. 内部校验（自调用） ═══════ -->
+
+        <mxCell id="act_p3" value="" style="fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="186" y="360" width="8" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m6" value="6. 内部调用 validate() 校验表单" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;curved=0;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="194" y="370" as="sourcePoint"/>
+            <Array as="points">
+              <mxPoint x="238" y="370"/>
+              <mxPoint x="238" y="382"/>
+              <mxPoint x="194" y="382"/>
+            </Array>
+            <mxPoint x="194" y="382" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ [alt] 校验分支 ═══════ -->
+
+        <mxCell id="alt1_bg" value="" style="fillColor=none;strokeColor=#9673a6;strokeWidth=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="395" width="540" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="alt1_tag" value="alt" style="text;fontSize=10;fontStyle=1;fontFamily=Helvetica;fontColor=#9673a6;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="154" y="395" width="25" height="16" as="geometry"/>
+        </mxCell>
+        <mxCell id="alt1_div" value="" style="endArrow=none;strokeColor=#9673a6;strokeWidth=0.5;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="165" y="458" as="sourcePoint"/>
+            <mxPoint x="675" y="458" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="alt1_l1" value="[校验失败：标题 &lt; 5字 / 内容 &lt; 20字 / 未选类别 / 未上传封面]" style="text;fontSize=9;fontFamily=Helvetica;fontColor=#D71921;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="160" y="413" width="380" height="14" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="act_p4" value="" style="fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="186" y="428" width="8" height="25" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m6_1" value="6.1 返回错误 errors.title / errors.content / errors.category / errors.cover" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#D71921;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="190" y="445" as="sourcePoint"/>
+            <mxPoint x="51" y="445" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="alt1_l2" value="[校验通过]" style="text;fontSize=9;fontFamily=Helvetica;fontColor=#3DDC84;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="160" y="462" width="70" height="14" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="act_p5" value="" style="fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="186" y="478" width="8" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m6_2" value="6.2 构建 FormData（标题、内容、类别、isPublish、封面）" style="endArrow=open;endSize=9;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#3DDC84;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="190" y="493" as="sourcePoint"/>
+            <mxPoint x="645" y="493" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ 7. 发送到后端 ═══════ -->
+
+        <mxCell id="m7" value="7. POST /adminApi/news/add FormData" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="190" y="535" as="sourcePoint"/>
+            <mxPoint x="645" y="535" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="act_s1" value="" style="fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="641" y="530" width="8" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m7_1" value="7.1 multer 解析封面 → public/newsuploads/" style="endArrow=open;endSize=9;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#555555;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="645" y="555" as="sourcePoint"/>
+            <mxPoint x="820" y="555" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="act_d1" value="" style="fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="816" y="550" width="8" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m8" value="8. INSERT INTO news (...)" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="645" y="575" as="sourcePoint"/>
+            <mxPoint x="820" y="575" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m8_1" value="8.1 ResultSet" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#555555;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="820" y="585" as="sourcePoint"/>
+            <mxPoint x="645" y="585" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ 9. 返回结果 ═══════ -->
+
+        <mxCell id="m9" value="9. { code: 200, message: &quot;添加成功&quot; }" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="645" y="610" as="sourcePoint"/>
+            <mxPoint x="190" y="610" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m10" value="10. 显示提示「[SAVED]」" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#555555;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="190" y="630" as="sourcePoint"/>
+            <mxPoint x="51" y="630" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m11" value="11. router.push('/news-management/NewsList')" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#555555;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="190" y="650" as="sourcePoint"/>
+            <mxPoint x="51" y="650" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ [alt] 后端错误 ═══════ -->
+
+        <mxCell id="alt2_bg" value="" style="fillColor=none;strokeColor=#9673a6;strokeWidth=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="670" width="540" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="alt2_tag" value="alt" style="text;fontSize=10;fontStyle=1;fontFamily=Helvetica;fontColor=#9673a6;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="154" y="670" width="25" height="16" as="geometry"/>
+        </mxCell>
+        <mxCell id="alt2_l1" value="[后端返回错误：请求失败或服务器异常]" style="text;fontSize=9;fontFamily=Helvetica;fontColor=#D71921;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="160" y="686" width="260" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="m12" value="12. 显示错误「[ERROR] 提交失败」" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#D71921;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="190" y="700" as="sourcePoint"/>
+            <mxPoint x="51" y="700" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ 注释 ═══════ -->
+
+        <mxCell id="note1" value="所有 API 请求通过 Axios 拦截器&#xa;自动携带 Authorization: Bearer &lt;JWT&gt;&#xa;Token 登录时获取，1h 有效期" style="shape=note;whiteSpace=wrap;backgroundOutline=1;size=12;fillColor=#FFF;strokeColor=#9673a6;fontSize=9;fontFamily=Helvetica;align=left;spacingLeft=4;spacingRight=4;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="710" y="530" width="180" height="58" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="note2" value="校验规则（validate()）：&#xa;• 标题：5 ~ 100 字符&#xa;• 内容：至少 20 字符&#xa;• 类别：必选&#xa;• 封面：必填" style="shape=note;whiteSpace=wrap;backgroundOutline=1;size=12;fillColor=#FFF;strokeColor=#d6b656;fontSize=9;fontFamily=Helvetica;align=left;spacingLeft=4;spacingRight=4;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="710" y="395" width="175" height="68" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════ 图例 ═══════ -->
+
+        <mxCell id="leg_bg" value="" style="rounded=1;whiteSpace=wrap;fillColor=#fafafa;strokeColor=#cccccc;" vertex="1" parent="1">
+          <mxGeometry x="40" y="750" width="360" height="72" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_t" value="图例" style="text;fontSize=10;fontStyle=1;align=left;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="50" y="754" width="30" height="16" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_l1" value="" style="endArrow=open;endSize=7;strokeColor=#333;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="52" y="778" as="sourcePoint"/>
+            <mxPoint x="88" y="778" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg_s1" value="实线：同步调用 / 请求" style="text;fontSize=9;fontFamily=Helvetica;align=left;" vertex="1" parent="1">
+          <mxGeometry x="95" y="770" width="130" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_l2" value="" style="endArrow=open;endSize=7;dashed=1;strokeColor=#555;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="52" y="796" as="sourcePoint"/>
+            <mxPoint x="88" y="796" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg_s2" value="虚线：返回响应 / 回调" style="text;fontSize=9;fontFamily=Helvetica;align=left;" vertex="1" parent="1">
+          <mxGeometry x="95" y="788" width="130" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_bar" value="" style="fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="58" y="808" width="6" height="10" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_s3" value="细长矩形：激活条" style="text;fontSize=9;fontFamily=Helvetica;align=left;" vertex="1" parent="1">
+          <mxGeometry x="95" y="806" width="100" height="14" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

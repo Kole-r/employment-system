@@ -1,5 +1,5 @@
 <template>
-    <div class="login-page dot-grid-subtle">
+    <div class="login-page">
         <div class="login-card">
             <div class="login-header">
                 <div class="login-logo">
@@ -61,6 +61,8 @@
         </div>
 
         <div class="login-bg-text">EMPLOY</div>
+
+        <FluidBackground />
     </div>
 </template>
 
@@ -69,6 +71,7 @@ import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserInfoStore } from '../store/userInfo'
 import axios from '@/util/axios.config.js'
+import FluidBackground from '../components/FluidBackground.vue'
 
 const router = useRouter()
 const userInfoStore = useUserInfoStore()
@@ -138,7 +141,6 @@ const handleSubmit = async () => {
 
 <style scoped>
 .login-page {
-    background: var(--black);
     min-height: 100vh;
     display: flex;
     align-items: center;

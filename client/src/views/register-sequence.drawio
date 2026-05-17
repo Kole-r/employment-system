@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" agent="Claude" version="21.0.0">
+  <diagram name="用户注册时序图">
+    <mxGraphModel dx="750" dy="620" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="750" pageHeight="620" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="用户注册 — 时序图" style="text;fontSize=14;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="250" y="8" width="220" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════ 参与者 ═══════ -->
+
+        <mxCell id="box_user" value="" style="shape=actor;size=18;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="24" y="38" width="26" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="lbl_user" value="用户" style="text;fontSize=10;fontStyle=1;align=center;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="14" y="70" width="46" height="14" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="box_login" value="Login.vue" style="rounded=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="140" y="40" width="78" height="24" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="box_axios" value="Axios&#xa;拦截器" style="rounded=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="290" y="38" width="68" height="28" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="box_server" value="Express&#xa;服务" style="rounded=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="420" y="38" width="72" height="28" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="box_ctrl" value="User&#xa;Controller" style="rounded=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="555" y="38" width="78" height="28" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="box_db" value="MySQL" style="shape=cylinder3;whiteSpace=wrap;boundedLbl=1;backgroundOutline=1;size=8;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=9;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="700" y="38" width="60" height="28" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════ 生命线 ═══════ -->
+
+        <mxCell id="ll_user" value="" style="endArrow=none;dashed=1;strokeColor=#6c8ebf;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="37" y="86" as="sourcePoint"/>
+            <mxPoint x="37" y="600" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_login" value="" style="endArrow=none;dashed=1;strokeColor=#d6b656;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="179" y="64" as="sourcePoint"/>
+            <mxPoint x="179" y="600" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_axios" value="" style="endArrow=none;dashed=1;strokeColor=#d6b656;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="324" y="66" as="sourcePoint"/>
+            <mxPoint x="324" y="600" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_server" value="" style="endArrow=none;dashed=1;strokeColor=#82b366;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="456" y="66" as="sourcePoint"/>
+            <mxPoint x="456" y="600" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_ctrl" value="" style="endArrow=none;dashed=1;strokeColor=#82b366;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="594" y="66" as="sourcePoint"/>
+            <mxPoint x="594" y="600" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll_db" value="" style="endArrow=none;dashed=1;strokeColor=#9673a6;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="730" y="66" as="sourcePoint"/>
+            <mxPoint x="730" y="600" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ alt 片段 ═══════ -->
+
+        <mxCell id="alt_reg" value="" style="fillColor=none;strokeColor=#9673a6;strokeWidth=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="10" y="90" width="790" height="400" as="geometry"/>
+        </mxCell>
+        <mxCell id="alt_tag" value="alt" style="text;fontSize=10;fontStyle=1;fontFamily=Helvetica;fontColor=#9673a6;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="14" y="90" width="25" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="alt_cond_ok" value="[注册成功] 用户名不存在" style="text;fontSize=9;fontFamily=Helvetica;fontColor=#3DDC84;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="18" y="104" width="140" height="14" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════ 注册成功流程 ═══════ -->
+
+        <!-- 1. 切换注册模式（自调用） -->
+        <mxCell id="m1" value="1. 切换至注册模式 isRegister = true" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;curved=0;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="183" y="122" as="sourcePoint"/>
+            <Array as="points">
+              <mxPoint x="220" y="122"/>
+              <mxPoint x="220" y="130"/>
+              <mxPoint x="183" y="130"/>
+            </Array>
+            <mxPoint x="183" y="130" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 2. 输入注册信息 -->
+        <mxCell id="act_u1" value="" style="fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="33" y="138" width="8" height="25" as="geometry"/>
+        </mxCell>
+        <mxCell id="m2" value="2. 输入用户名、密码、真实姓名" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="37" y="146" as="sourcePoint"/>
+            <mxPoint x="179" y="146" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 3. validate() 自调用 -->
+        <mxCell id="act_l1" value="" style="fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="175" y="155" width="8" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="m3" value="3. validate() 表单校验" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;curved=0;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="183" y="163" as="sourcePoint"/>
+            <Array as="points">
+              <mxPoint x="220" y="163"/>
+              <mxPoint x="220" y="171"/>
+              <mxPoint x="183" y="171"/>
+            </Array>
+            <mxPoint x="183" y="171" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 4. POST register → Axios -->
+        <mxCell id="m4" value="4. POST /webApi/user/register {username, password, real_name}" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="183" y="183" as="sourcePoint"/>
+            <mxPoint x="324" y="183" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 5. 拦截器添加头 → Express -->
+        <mxCell id="act_ax1" value="" style="fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="320" y="191" width="8" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="m5" value="5. 添加 Authorization: Bearer &lt;token&gt;" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="328" y="198" as="sourcePoint"/>
+            <mxPoint x="456" y="198" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 6. authMiddleware 白名单放行 -->
+        <mxCell id="act_s1" value="" style="fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="452" y="206" width="8" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="m6" value="6. authMiddleware：白名单放行" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;curved=0;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="460" y="213" as="sourcePoint"/>
+            <Array as="points">
+              <mxPoint x="495" y="213"/>
+              <mxPoint x="495" y="221"/>
+              <mxPoint x="460" y="221"/>
+            </Array>
+            <mxPoint x="460" y="221" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 7. 路由匹配 → Controller -->
+        <mxCell id="m7" value="7. 路由匹配 → UserController.register()" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="460" y="233" as="sourcePoint"/>
+            <mxPoint x="594" y="233" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 8. 检查用户名 → MySQL -->
+        <mxCell id="act_c1" value="" style="fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="590" y="241" width="8" height="42" as="geometry"/>
+        </mxCell>
+        <mxCell id="m8" value="8. UserModel.findByUsername(username)" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="598" y="248" as="sourcePoint"/>
+            <mxPoint x="730" y="248" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="act_d1" value="" style="fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="726" y="245" width="8" height="42" as="geometry"/>
+        </mxCell>
+
+        <!-- 9. 返回 null ← MySQL -->
+        <mxCell id="m9" value="9. 返回 null（用户名可用）" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#555555;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="730" y="262" as="sourcePoint"/>
+            <mxPoint x="598" y="262" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 10. 插入新用户 → MySQL -->
+        <mxCell id="m10" value="10. UserModel.create({username, password, real_name, role:0})" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="598" y="276" as="sourcePoint"/>
+            <mxPoint x="730" y="276" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 11. 返回 insertId ← MySQL -->
+        <mxCell id="m11" value="11. 返回 insertId" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#555555;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="730" y="284" as="sourcePoint"/>
+            <mxPoint x="598" y="284" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 12. 返回注册成功 → Login.vue -->
+        <mxCell id="m12" value="12. 响应 {code:200, message:'注册成功', data:{id}}" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="456" y="310" as="sourcePoint"/>
+            <mxPoint x="183" y="310" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 13. 响应拦截器刷新 Token -->
+        <mxCell id="m13" value="13. 响应拦截器：刷新 Token" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#555555;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="324" y="328" as="sourcePoint"/>
+            <mxPoint x="183" y="328" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 14. 切换至登录模式 -->
+        <mxCell id="act_l2" value="" style="fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="175" y="335" width="8" height="25" as="geometry"/>
+        </mxCell>
+        <mxCell id="m14" value="14. isRegister = false，提示请登录" style="endArrow=open;endSize=9;html=1;fontSize=10;fontFamily=Helvetica;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="183" y="342" as="sourcePoint"/>
+            <mxPoint x="37" y="342" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ 注册失败分支 ═══════ -->
+
+        <mxCell id="alt_sep" value="" style="endArrow=none;strokeColor=#9673a6;strokeWidth=0.5;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="25" y="378" as="sourcePoint"/>
+            <mxPoint x="785" y="378" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="alt_fail_cond" value="[注册失败] 用户名已存在 / 服务器内部错误" style="text;fontSize=9;fontFamily=Helvetica;fontColor=#D71921;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="18" y="381" width="240" height="14" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m_f1" value="F1. 服务端返回 {code:400, message:'用户名已存在'}" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#D71921;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="456" y="403" as="sourcePoint"/>
+            <mxPoint x="37" y="403" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m_f2" value="F2. 服务端返回 {code:500, message:'服务器内部错误'}" style="endArrow=open;endSize=9;dashed=1;html=1;fontSize=9;fontFamily=Helvetica;fontColor=#D71921;labelBackgroundColor=none;verticalAlign=bottom;verticalLabelPosition=top;spacingTop=-4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="456" y="421" as="sourcePoint"/>
+            <mxPoint x="37" y="421" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══════ 注释 ═══════ -->
+
+        <mxCell id="note_reg" value="注册默认角色: 毕业生(role=0)&#xa;状态: 启用(status=1)&#xa;real_name 默认为 username" style="shape=note;whiteSpace=wrap;backgroundOutline=1;size=12;fillColor=#FFF;strokeColor=#82b366;fontSize=9;fontFamily=Helvetica;align=left;spacingLeft=4;spacingRight=4;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="580" y="150" width="170" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="note_auth" value="注册接口属于白名单&#xa;不需要 JWT 即可访问" style="shape=note;whiteSpace=wrap;backgroundOutline=1;size=12;fillColor=#FFF;strokeColor=#9673a6;fontSize=9;fontFamily=Helvetica;align=left;spacingLeft=4;spacingRight=4;spacingTop=4;" vertex="1" parent="1">
+          <mxGeometry x="580" y="210" width="145" height="38" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════ 图例 ═══════ -->
+
+        <mxCell id="leg_bg" value="" style="rounded=1;whiteSpace=wrap;fillColor=#fafafa;strokeColor=#cccccc;" vertex="1" parent="1">
+          <mxGeometry x="10" y="470" width="360" height="72" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_t" value="图例" style="text;fontSize=10;fontStyle=1;align=left;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="20" y="474" width="30" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_l1" value="" style="endArrow=open;endSize=7;strokeColor=#333;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="22" y="496" as="sourcePoint"/>
+            <mxPoint x="58" y="496" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg_s1" value="实线：同步调用 / 请求" style="text;fontSize=9;fontFamily=Helvetica;align=left;" vertex="1" parent="1">
+          <mxGeometry x="65" y="489" width="120" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_l2" value="" style="endArrow=open;endSize=7;dashed=1;strokeColor=#555;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="22" y="514" as="sourcePoint"/>
+            <mxPoint x="58" y="514" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg_s2" value="虚线：返回响应 / 回调" style="text;fontSize=9;fontFamily=Helvetica;align=left;" vertex="1" parent="1">
+          <mxGeometry x="65" y="507" width="120" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_bar" value="" style="fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="28" y="526" width="6" height="10" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_s3" value="细长矩形：激活条" style="text;fontSize=9;fontFamily=Helvetica;align=left;" vertex="1" parent="1">
+          <mxGeometry x="65" y="525" width="100" height="14" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

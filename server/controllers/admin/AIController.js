@@ -1,8 +1,9 @@
 const axios = require('axios');
 
-// MiMo API 配置 (Anthropic 兼容格式)
-const MIMO_API_URL = process.env.MIMO_API_URL || 'https://token-plan-cn.xiaomimimo.com/anthropic/v1/messages';
-const MIMO_API_KEY = process.env.MIMO_API_KEY || 'tp-cz3vz9pkzjrioqh6d0kcihz1tvirfyo6s8zf4tm7mlfpd4jn';
+// MiMo API 配置
+const MIMO_API_URL = process.env.MIMO_API_URL;
+const MIMO_API_KEY = process.env.MIMO_API_KEY;
+
 
 const AIController = {
   // 管理端 AI 写作辅助

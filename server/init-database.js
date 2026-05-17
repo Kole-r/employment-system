@@ -22,10 +22,11 @@ async function initDatabase() {
         const [existingUsers] = await db.query('SELECT COUNT(*) as count FROM users');
         if (existingUsers[0].count === 0) {
             // 插入默认管理员
+            const adminPwd = process.env.ADMIN_PASSWORD || '123456';
             await db.execute(`
                 INSERT INTO users (username, password, role, real_name, phone, email, status)
-                VALUES ('admin', '123456', 1, '系统管理员', '13800000000', 'admin@employment.com', 1)
-            `);
+                VALUES ('admin', ?, 1, '系统管理员', '13800000000', 'admin@employment.com', 1)
+            `, [adminPwd]);
             console.log('默认管理员创建成功');
         } else {
             console.log('数据库中已有用户数据，跳过插入');

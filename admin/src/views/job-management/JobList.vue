@@ -185,6 +185,10 @@
                                 <label class="form-label">福利待遇</label>
                                 <input v-model="editForm.benefits" type="text" class="form-input" placeholder="逗号分隔，如：五险一金,带薪年假" />
                             </div>
+                            <div class="form-group">
+                                <label class="form-label">投递链接</label>
+                                <input v-model="editForm.link" type="text" class="form-input" placeholder="如：https://company.com/apply" />
+                            </div>
 
                             <div class="edit-section-title">公司信息</div>
                             <div class="form-row">

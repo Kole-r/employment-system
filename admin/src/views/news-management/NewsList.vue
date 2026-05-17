@@ -128,6 +128,8 @@
             </Transition>
         </Teleport>
 
+        <AdminChatBot :context="chatContext" />
+
         <!-- 编辑弹窗 -->
         <Teleport to="body">
             <Transition name="fade">
@@ -186,6 +188,7 @@ import { ref, computed, onMounted, reactive } from 'vue';
 import axios from '@/util/axios.config.js';
 import upload from '@/util/upload.js';
 import Upload from '@/components/upload/Upload.vue';
+import AdminChatBot from '@/components/AdminChatBot.vue';
 
 const tableData = ref([]);
 const activeCategory = ref(0);
@@ -212,6 +215,13 @@ const categoryOptions = [
 const filteredData = computed(() => {
     if (activeCategory.value === 0) return tableData.value;
     return tableData.value.filter(i => i.category === activeCategory.value);
+});
+
+const chatContext = computed(() => {
+    const category = getCategoryLabel(activeCategory.value);
+    const total = tableData.value.length;
+    const published = tableData.value.filter(i => i.isPublish === 1).length;
+    return `当前页面：新闻管理\n分类筛选：${category}\n新闻总数：${total}\n已发布：${published}\n分类选项：政策解读(1)、行业动态(2)、求职技巧(3)、校园招聘(4)`;
 });
 
 const getCategoryLabel = (val) => categoryOptions.find(c => c.value === val)?.label || '未知';

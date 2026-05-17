@@ -4,13 +4,15 @@ import sys
 import pymysql
 import chromadb
 from chromadb.config import Settings
+from dotenv import load_dotenv
+load_dotenv()
 
 # 数据库配置
 DB_CONFIG = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': '22222222',
-    'database': 'employment_platform',
+    'host': os.getenv('DB_HOST', 'localhost'),
+    'user': os.getenv('DB_USER', 'root'),
+    'password': os.getenv('DB_PASSWORD', ''),
+    'database': os.getenv('DB_NAME', 'employment_platform'),
     'charset': 'utf8mb4'
 }
 

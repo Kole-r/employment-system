@@ -1,4 +1,6 @@
 const JobService = require('../../services/admin/JobService');
+const JobModel = require('../../models/JobModel');
+const { embedJob, deleteDocument } = require('../../util/syncToAI');
 
 const JobController = {
   // 获取岗位列表或单个岗位
@@ -43,6 +45,8 @@ const JobController = {
       }
 
       const jobId = await JobService.addJob(jobData);
+      // 同步到 ChromaDB 向量数据库
+      embedJob({ ...jobData, id: jobId });
       res.status(200).json({
         code: 200,
         message: '岗位添加成功',
@@ -63,6 +67,9 @@ const JobController = {
       }
 
       await JobService.updateJob(jobId, req.body);
+      // 获取更新后的完整数据，同步到 ChromaDB
+      const updatedJob = await JobModel.findById(jobId);
+      if (updatedJob) embedJob(updatedJob);
       res.status(200).json({ code: 200, message: '岗位更新成功' });
     } catch (error) {
       console.error('更新岗位失败:', error);
@@ -79,6 +86,8 @@ const JobController = {
       }
 
       await JobService.deleteJob(jobId);
+      // 从 ChromaDB 删除对应文档
+      deleteDocument('job', jobId);
       res.status(200).json({ code: 200, message: '岗位删除成功' });
     } catch (error) {
       console.error('删除岗位失败:', error);

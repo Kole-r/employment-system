@@ -73,6 +73,7 @@ const userInfo = useUserInfoStore()
 
 const vAdmin = {
     mounted(el) {
+        // 只有 role=1（老师/校方）才能看到用户管理
         if (userInfo.$state.role !== 1) {
             el.parentNode && el.parentNode.removeChild(el)
         }

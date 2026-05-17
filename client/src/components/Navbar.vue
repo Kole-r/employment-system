@@ -28,7 +28,7 @@
                     </svg>
                 </router-link>
 
-                <div class="nav-user" @click="showUserMenu = !showUserMenu">
+                <div class="nav-user" @click.stop="showUserMenu = !showUserMenu">
                     <span class="user-name">{{ userInfoStore.real_name || userInfoStore.username || '用户' }}</span>
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="chevron" :class="{ open: showUserMenu }">
                         <polyline points="6 9 12 15 18 9"></polyline>
@@ -39,6 +39,9 @@
                         <div v-if="showUserMenu" class="user-dropdown" @click.stop>
                             <router-link to="/profile" class="dropdown-item" @click="showUserMenu = false">
                                 个人中心
+                            </router-link>
+                            <router-link to="/resume" class="dropdown-item" @click="showUserMenu = false">
+                                简历编辑
                             </router-link>
                             <div class="dropdown-divider"></div>
                             <div class="dropdown-item danger" @click="handleLogout">退出登录</div>

@@ -14,7 +14,7 @@
                     </div>
                     <div class="user-meta">
                         <span class="meta-label">ROLE</span>
-                        <span class="meta-value">{{ userInfo.$state.role === 1 ? '管理员' : '编辑者' }}</span>
+                        <span class="meta-value">{{ userInfo.$state.role === 1 ? '管理员' : userInfo.$state.role === 2 ? '企业人员' : '毕业生' }}</span>
                     </div>
                 </div>
             </div>
@@ -39,21 +39,49 @@
             </div>
         </div>
 
-        <!-- Products Section -->
+        <!-- Stats Overview -->
         <div class="section-block">
             <div class="section-head">
-                <span class="section-label">COMPANY PRODUCTS</span>
-                <span class="section-count">{{ products.length }} ITEMS</span>
+                <span class="section-label">OVERVIEW</span>
             </div>
-            <div class="product-grid">
-                <div v-for="item in products" :key="item.id" class="product-card">
-                    <div class="product-thumb">
-                        <span class="product-index">{{ String(item.id).padStart(2, '0') }}</span>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.newsCount }}</div>
+                    <div class="stat-meta">
+                        <span class="stat-label">NEWS</span>
+                        <span class="stat-sub">已发布 {{ stats.publishedCount }} 篇</span>
                     </div>
-                    <div class="product-info">
-                        <span class="product-name">{{ item.name }}</span>
-                        <span class="product-desc">{{ item.desc }}</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.jobCount }}</div>
+                    <div class="stat-meta">
+                        <span class="stat-label">JOBS</span>
+                        <span class="stat-sub">招聘中 {{ stats.activeJobCount }} 个</span>
                     </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.userCount }}</div>
+                    <div class="stat-meta">
+                        <span class="stat-label">USERS</span>
+                        <span class="stat-sub">管理员 {{ stats.adminCount }} 人</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="section-block">
+            <div class="section-head">
+                <span class="section-label">ANALYTICS</span>
+            </div>
+            <div class="chart-grid">
+                <div class="chart-card">
+                    <span class="chart-title">新闻分类分布</span>
+                    <div ref="categoryChartRef" class="chart-container"></div>
+                </div>
+                <div class="chart-card">
+                    <span class="chart-title">岗位城市分布</span>
+                    <div ref="cityChartRef" class="chart-container"></div>
                 </div>
             </div>
         </div>
@@ -61,45 +89,195 @@
 </template>
 
 <script setup>
-import useUserInfoStore from '../../store/userInfo.js';
-import { computed, ref, onMounted, onUnmounted } from 'vue';
-const userInfo = useUserInfoStore();
-const avatarUrl = computed(() => userInfo.$state.avatar ? userInfo.$state.avatar : 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png');
+import useUserInfoStore from '../../store/userInfo.js'
+import axios from '../../util/axios.config.js'
+import { computed, ref, reactive, onMounted, onUnmounted } from 'vue'
+import * as echarts from 'echarts'
+
+const userInfo = useUserInfoStore()
+const avatarUrl = computed(() =>
+    userInfo.$state.avatar
+        ? userInfo.$state.avatar
+        : 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+)
 
 const welcomeText = computed(() => {
-    const hours = new Date().getHours();
-    if (hours < 12) return '早上好';
-    if (hours < 18) return '下午好';
-    return '晚上好';
-});
+    const hours = new Date().getHours()
+    if (hours < 12) return '早上好'
+    if (hours < 18) return '下午好'
+    return '晚上好'
+})
 
-const currentTime = ref('');
-const currentDate = ref('');
-let timer = null;
+/* ── Clock ── */
+const currentTime = ref('')
+const currentDate = ref('')
+let timer = null
 
 const updateTime = () => {
-    const now = new Date();
-    currentTime.value = now.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-    currentDate.value = now.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'short' });
-};
+    const now = new Date()
+    currentTime.value = now.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+    currentDate.value = now.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'short' })
+}
 
-onMounted(() => {
-    updateTime();
-    timer = setInterval(updateTime, 1000);
-});
+/* ── Stats Data ── */
+const stats = reactive({
+    newsCount: 0,
+    publishedCount: 0,
+    jobCount: 0,
+    activeJobCount: 0,
+    userCount: 0,
+    adminCount: 0,
+})
+
+/* ── Chart Refs ── */
+const categoryChartRef = ref(null)
+const cityChartRef = ref(null)
+let categoryChart = null
+let cityChart = null
+
+const CATEGORY_MAP = { 1: '就业政策', 2: '行业动态', 3: '求职技巧', 4: '企业资讯', 5: '校园招聘' }
+
+/* ── Fetch & Init ── */
+onMounted(async () => {
+    updateTime()
+    timer = setInterval(updateTime, 1000)
+
+    // ECharts dark theme config
+    echarts.registerTheme('ndDark', {
+        backgroundColor: 'transparent',
+        textStyle: { color: '#888888' },
+        title: { textStyle: { color: '#CCCCCC' } },
+    })
+
+    try {
+        const [newsRes, jobsRes, usersRes] = await Promise.all([
+            axios.get('/adminApi/news/list'),
+            axios.get('/adminApi/job/list'),
+            axios.get('/adminApi/user/list'),
+        ])
+
+        const newsList = newsRes.data?.data || []
+        const jobList = jobsRes.data?.data || []
+        const userList = usersRes.data?.data || []
+
+        // Compute stats
+        stats.newsCount = newsList.length
+        stats.publishedCount = newsList.filter(n => n.status === 1).length
+        stats.jobCount = jobList.length
+        stats.activeJobCount = jobList.filter(j => j.status === 1).length
+        stats.userCount = userList.length
+        stats.adminCount = userList.filter(u => u.role === 1).length
+
+        // News category distribution
+        const categoryCount = {}
+        newsList.forEach(n => {
+            const name = CATEGORY_MAP[n.category] || `分类${n.category}`
+            categoryCount[name] = (categoryCount[name] || 0) + 1
+        })
+        const categoryData = Object.entries(categoryCount).map(([name, value]) => ({ name, value }))
+
+        // Jobs city distribution (top 8)
+        const cityCount = {}
+        jobList.forEach(j => {
+            if (j.city) cityCount[j.city] = (cityCount[j.city] || 0) + 1
+        })
+        const sortedCities = Object.entries(cityCount)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 8)
+        const cityNames = sortedCities.map(c => c[0]).reverse()
+        const cityValues = sortedCities.map(c => c[1]).reverse()
+
+        // Init category chart (doughnut)
+        if (categoryChartRef.value) {
+            categoryChart = echarts.init(categoryChartRef.value, 'ndDark')
+            categoryChart.setOption({
+                tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
+                legend: {
+                    bottom: 0,
+                    textStyle: { color: '#888888', fontSize: 11 },
+                    itemWidth: 10,
+                    itemHeight: 10,
+                },
+                series: [{
+                    type: 'pie',
+                    radius: ['40%', '65%'],
+                    center: ['50%', '42%'],
+                    avoidLabelOverlap: false,
+                    label: { show: false },
+                    emphasis: {
+                        label: { show: true, fontSize: 13, fontWeight: 'bold', color: '#F0F0F0' },
+                    },
+                    data: categoryData,
+                    itemStyle: {
+                        borderColor: '#111111',
+                        borderWidth: 2,
+                    },
+                }],
+                color: ['#D71921', '#5B9BF6', '#3DDC84', '#D4A843', '#A78BFA', '#F472B6'],
+            })
+        }
+
+        // Init city chart (horizontal bar)
+        if (cityChartRef.value) {
+            cityChart = echarts.init(cityChartRef.value, 'ndDark')
+            cityChart.setOption({
+                tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+                grid: { left: 80, right: 40, top: 16, bottom: 24 },
+                xAxis: {
+                    type: 'value',
+                    axisLine: { lineStyle: { color: '#1E1E1E' } },
+                    splitLine: { lineStyle: { color: '#1E1E1E' } },
+                    axisLabel: { color: '#555555' },
+                },
+                yAxis: {
+                    type: 'category',
+                    data: cityNames,
+                    axisLine: { lineStyle: { color: '#1E1E1E' } },
+                    axisLabel: { color: '#888888', fontSize: 12 },
+                },
+                series: [{
+                    type: 'bar',
+                    data: cityValues,
+                    barWidth: 16,
+                    itemStyle: {
+                        borderRadius: [0, 4, 4, 0],
+                        color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                            { offset: 0, color: '#D7192144' },
+                            { offset: 1, color: '#D71921' },
+                        ]),
+                    },
+                    label: {
+                        show: true,
+                        position: 'right',
+                        color: '#888888',
+                        fontSize: 11,
+                        fontFamily: 'Space Mono, monospace',
+                    },
+                }],
+            })
+        }
+    } catch (e) {
+        console.warn('Dashboard data load failed:', e)
+    }
+
+    // Resize handler
+    const handleResize = () => {
+        categoryChart?.resize()
+        cityChart?.resize()
+    }
+    window.addEventListener('resize', handleResize)
+    // Store for cleanup
+    if (timer) timer._resizeHandler = handleResize
+})
 
 onUnmounted(() => {
-    clearInterval(timer);
-});
-
-const products = ref([
-    { id: 1, name: '智能招聘平台', desc: 'AI 驱动的人才匹配系统' },
-    { id: 2, name: '职业培训中心', desc: '在线技能提升课程' },
-    { id: 3, name: '就业数据分析', desc: '行业趋势与薪资报告' },
-    { id: 4, name: '简历优化工具', desc: '专业简历模板与建议' },
-    { id: 5, name: '面试辅导系统', desc: 'AI 模拟面试训练' },
-    { id: 6, name: '企业合作对接', desc: '校企合作桥梁平台' },
-]);
+    clearInterval(timer)
+    categoryChart?.dispose()
+    cityChart?.dispose()
+    if (timer?._resizeHandler) {
+        window.removeEventListener('resize', timer._resizeHandler)
+    }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -276,7 +454,7 @@ $blue: #5B9BF6;
 
 /* ── Section ── */
 .section-block {
-    margin-bottom: 32px;
+    margin-bottom: 40px;
 }
 
 .section-head {
@@ -293,64 +471,93 @@ $blue: #5B9BF6;
     color: $g3;
 }
 
-.section-count {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    color: $g2;
-}
-
-/* ── Product Grid ── */
-.product-grid {
+/* ── Stats Cards ── */
+.stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
 }
 
-.product-card {
+.stat-card {
     background: $surface-1;
     border: 1px solid $border;
     border-radius: 12px;
-    padding: 24px;
+    padding: 28px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
     transition: border-color 150ms ease-out;
-    cursor: default;
 
     &:hover { border-color: $border-hi; }
 }
 
-.product-thumb {
-    width: 100%;
-    height: 80px;
-    background: $surface-2;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 16px;
-}
-
-.product-index {
+.stat-number {
     font-family: 'Space Mono', monospace;
-    font-size: 28px;
+    font-size: 42px;
     font-weight: 700;
-    color: $g1;
-    letter-spacing: -0.02em;
+    color: $pure;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    min-width: 72px;
+    text-align: center;
 }
 
-.product-info {
+.stat-meta {
     display: flex;
     flex-direction: column;
     gap: 6px;
 }
 
-.product-name {
-    font-size: 15px;
-    font-weight: 500;
-    color: $white;
+.stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: $g2;
 }
 
-.product-desc {
+.stat-sub {
     font-size: 13px;
     color: $g3;
+}
+
+/* ── Chart Cards ── */
+.chart-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.chart-card {
+    background: $surface-1;
+    border: 1px solid $border;
+    border-radius: 12px;
+    padding: 24px;
+    transition: border-color 150ms ease-out;
+
+    &:hover { border-color: $border-hi; }
+}
+
+.chart-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: $g3;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.chart-container {
+    width: 100%;
+    height: 280px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+    .chart-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 860px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .hero-section { flex-direction: column; align-items: flex-start; gap: 24px; }
 }
 </style>

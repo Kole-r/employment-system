@@ -19,35 +19,44 @@ const RecommendService = {
       [userId]
     );
 
-    // 3. 计算用户偏好权重
-    const scores = {};
+    // 3. 收集已浏览岗位 ID（用于排除），并单独记录收藏岗位
     const viewedJobIds = new Set();
-
+    const favoritedJobIds = new Set();
     behaviors.forEach(b => {
       viewedJobIds.add(b.target_id);
-      const weight = b.behavior === 'collect' ? 3 : (b.behavior === 'apply' ? 5 : 1);
-      scores[b.target_id] = (scores[b.target_id] || 0) + weight;
+      if (b.behavior === 'collect') favoritedJobIds.add(b.target_id);
     });
 
-    // 4. 获取用户浏览过的岗位特征，提取偏好
+    // 4. 用户偏好（行为已自动同步到 profile，直接使用）
     let preferredCities = user.city_preference ? user.city_preference.split(',') : [];
     let preferredTypes = user.job_preference ? user.job_preference.split(',') : [];
     let preferredTags = [];
+    let favoritedJobTypes = new Set();
+    let favoritedTags = new Set();
 
+    // 从已浏览岗位中提取标签偏好（标签不存储在 profile 中）
     if (viewedJobIds.size > 0) {
       const ids = [...viewedJobIds];
       const [viewedJobs] = await db.query(
-        `SELECT city, job_type, tags FROM jobs WHERE id IN (${ids.map(() => '?').join(',')})`,
+        `SELECT id, job_type, tags FROM jobs WHERE id IN (${ids.map(() => '?').join(',')})`,
         ids
       );
       viewedJobs.forEach(j => {
-        if (j.city && !preferredCities.includes(j.city)) preferredCities.push(j.city);
-        if (j.job_type && !preferredTypes.includes(j.job_type)) preferredTypes.push(j.job_type);
         if (j.tags) {
           j.tags.split(',').forEach(t => {
             const tag = t.trim();
             if (tag && !preferredTags.includes(tag)) preferredTags.push(tag);
           });
+        }
+        // 收藏岗位的类型和标签单独收集
+        if (favoritedJobIds.has(j.id)) {
+          if (j.job_type) favoritedJobTypes.add(j.job_type);
+          if (j.tags) {
+            j.tags.split(',').forEach(t => {
+              const tag = t.trim();
+              if (tag) favoritedTags.add(tag);
+            });
+          }
         }
       });
     }
@@ -76,6 +85,15 @@ const RecommendService = {
         const jobTags = job.tags.split(',').map(t => t.trim());
         jobTags.forEach(t => {
           if (preferredTags.includes(t)) score += 2;
+        });
+      }
+
+      // 收藏行为加权：与收藏岗位同类型或同标签加分
+      if (favoritedJobTypes.has(job.job_type)) score += 3;
+      if (job.tags) {
+        job.tags.split(',').forEach(t => {
+          const tag = t.trim();
+          if (tag && favoritedTags.has(tag)) score += 3;
         });
       }
 

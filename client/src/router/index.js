@@ -45,6 +45,7 @@ router.beforeEach((to, from, next) => {
       { path: '/jobs/:id', component: () => import('../views/JobDetail.vue') },
       { path: '/profile', component: () => import('../views/Profile.vue') },
       { path: '/favorites', component: () => import('../views/Favorites.vue') },
+      { path: '/resume', component: () => import('../views/Resume.vue') },
     ]
 
     dynamicRoutes.forEach(route => {

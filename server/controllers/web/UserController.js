@@ -1,5 +1,7 @@
 const UserModel = require('../../models/UserModel');
 const FavoriteModel = require('../../models/FavoriteModel');
+const BehaviorModel = require('../../models/BehaviorModel');
+const syncUserPreferences = require('../../services/web/syncPreferences');
 const JWT = require('../../util/JWT');
 
 const UserController = {
@@ -36,9 +38,15 @@ const UserController = {
           role: user.role,
           real_name: user.real_name,
           avatar: user.avatar,
+          phone: user.phone,
+          email: user.email,
           major: user.major,
           degree: user.degree,
-          university: user.university
+          graduation_year: user.graduation_year,
+          university: user.university,
+          city_preference: user.city_preference,
+          job_preference: user.job_preference,
+          bio: user.bio
         }
       });
     } catch (error) {
@@ -75,6 +83,32 @@ const UserController = {
       });
     } catch (error) {
       console.error('注册失败:', error);
+      res.status(500).json({ code: 500, message: '服务器内部错误' });
+    }
+  },
+
+  // 更新个人信息
+  updateProfile: async (req, res) => {
+    try {
+      const userId = req.user.id;
+      const { username, real_name, phone, email, major, degree, graduation_year, university, city_preference, job_preference, bio } = req.body;
+      const avatar = req.file ? `/avataruploads/${req.file.filename}` : undefined;
+
+      if (!username || username.length < 3 || username.length > 20) {
+        return res.status(200).json({ code: 400, message: '用户名长度必须在3到20个字符之间' });
+      }
+
+      const updateData = { username, real_name, phone, email, major, degree, graduation_year: graduation_year ? Number(graduation_year) : null, university, city_preference, job_preference, bio };
+      if (avatar) updateData.avatar = avatar;
+
+      await UserModel.update(userId, updateData);
+
+      const updated = await UserModel.findById(userId);
+      const { password, ...safeUser } = updated;
+
+      res.status(200).json({ code: 200, message: '更新成功', data: safeUser });
+    } catch (error) {
+      console.error('更新个人信息失败:', error);
       res.status(500).json({ code: 500, message: '服务器内部错误' });
     }
   },
@@ -118,6 +152,18 @@ const UserController = {
     }
   },
 
+  // 检查是否已收藏
+  checkFavorite: async (req, res) => {
+    try {
+      const { target_type, target_id } = req.query;
+      const userId = req.user.id;
+      const favorited = await FavoriteModel.isFavorited(userId, target_type, Number(target_id));
+      res.status(200).json({ code: 200, data: { favorited } });
+    } catch (error) {
+      res.status(500).json({ code: 500, message: '服务器内部错误' });
+    }
+  },
+
   // 添加/取消收藏
   toggleFavorite: async (req, res) => {
     try {
@@ -130,6 +176,15 @@ const UserController = {
         res.status(200).json({ code: 200, message: '已取消收藏', data: { favorited: false } });
       } else {
         await FavoriteModel.create(userId, target_type, target_id);
+        await BehaviorModel.create(userId, target_type, target_id, 'collect');
+        // 收藏岗位时同步用户偏好
+        if (target_type === 'job') {
+          const JobModel = require('../../models/JobModel');
+          const job = await JobModel.findById(target_id);
+          if (job) {
+            await syncUserPreferences(userId, job.city, job.job_type);
+          }
+        }
         res.status(200).json({ code: 200, message: '收藏成功', data: { favorited: true } });
       }
     } catch (error) {

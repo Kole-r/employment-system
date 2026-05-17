@@ -12,9 +12,16 @@
             <div class="detail-header">
                 <div class="header-top">
                     <span class="header-label">JOB DETAIL</span>
-                    <span class="header-salary">
-                        {{ job.salary_min / 1000 }}<span class="salary-sep">–</span>{{ job.salary_max / 1000 }}<span class="salary-unit">K</span>
-                    </span>
+                    <div class="header-actions">
+                                                        <button class="fav-btn" :class="{ active: isFavorited }" @click="toggleFav">
+                            <svg width="18" height="18" viewBox="0 0 24 24" :fill="isFavorited ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="1.5">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                        </button>
+                        <span class="header-salary">
+                            {{ job.salary_min / 1000 }}<span class="salary-sep">–</span>{{ job.salary_max / 1000 }}<span class="salary-unit">K</span>
+                        </span>
+                    </div>
                 </div>
                 <h1 class="detail-title">{{ job.job_title }}</h1>
                 <div class="detail-tags" v-if="job.tags">
@@ -76,26 +83,53 @@
                     <span class="benefit" v-for="b in job.benefits.split(',')" :key="b">{{ b }}</span>
                 </div>
             </div>
+
+            <!-- Apply Link -->
+            <div v-if="job.link" class="apply-section">
+                <a :href="job.link" target="_blank" rel="noopener noreferrer" class="apply-btn">
+                    立即投递
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                    </svg>
+                </a>
+            </div>
         </div>
 
         <div v-else class="loading">
             <span class="loading-text">[LOADING...]</span>
         </div>
     </div>
+    <ChatBot />
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import ChatBot from '../components/ChatBot.vue'
 import { useRoute } from 'vue-router'
 import axios from '@/util/axios.config.js'
 
 const route = useRoute()
 const job = ref(null)
+const isFavorited = ref(false)
+
+const toggleFav = async () => {
+    try {
+        const res = await axios.post('/webApi/user/favorite', {
+            target_type: 'job',
+            target_id: Number(route.params.id)
+        })
+        if (res.data.code === 200) isFavorited.value = res.data.data.favorited
+    } catch (e) { console.error(e) }
+}
 
 onMounted(async () => {
     try {
-        const res = await axios.get(`/webApi/job/detail/${route.params.id}`)
-        if (res.data.code === 200) job.value = res.data.data
+        const [detailRes, favRes] = await Promise.all([
+            axios.get(`/webApi/job/detail/${route.params.id}`),
+            axios.get(`/webApi/user/favorite/check?target_type=job&target_id=${route.params.id}`)
+        ])
+        if (detailRes.data.code === 200) job.value = detailRes.data.data
+        if (favRes.data.code === 200) isFavorited.value = favRes.data.data.favorited
     } catch (e) { console.error(e) }
 })
 </script>
@@ -144,6 +178,38 @@ onMounted(async () => {
     font-size: 10px;
     letter-spacing: 0.1em;
     color: var(--text-disabled);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.fav-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-disabled);
+    cursor: pointer;
+    transition: all 150ms ease-out;
+    padding: 0;
+}
+
+.fav-btn:hover {
+    border-color: var(--border-visible);
+    color: var(--text-secondary);
+}
+
+.fav-btn.active {
+    color: #e74c3c;
+    border-color: rgba(231, 76, 60, 0.3);
+    background: rgba(231, 76, 60, 0.05);
 }
 
 .header-salary {
@@ -314,6 +380,36 @@ onMounted(async () => {
     border: 1px solid var(--border-visible);
     border-radius: 999px;
     padding: 4px 14px;
+}
+
+/* ── Apply ── */
+.apply-section {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--border);
+}
+
+.apply-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    border-radius: 999px;
+    border: 1px solid var(--text-display);
+    background: var(--text-display);
+    color: var(--bg, #000);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 150ms ease-out;
+}
+
+.apply-btn:hover {
+    background: transparent;
+    color: var(--text-display);
 }
 
 /* ── Loading ── */

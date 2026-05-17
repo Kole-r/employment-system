@@ -1,4 +1,5 @@
 <template>
+    
     <div class="add-page">
         <!-- Hero -->
         <div class="page-hero">
@@ -122,6 +123,10 @@
                     <label class="form-label">标签</label>
                     <input v-model="form.tags" type="text" class="form-input" placeholder="逗号分隔，如：Vue,React,TypeScript" />
                 </div>
+                <div class="form-group">
+                    <label class="form-label">投递链接</label>
+                    <input v-model="form.link" type="text" class="form-input" placeholder="如：https://company.com/apply" />
+                </div>
 
                 <!-- Actions -->
                 <div class="form-actions">
@@ -163,6 +168,7 @@ const form = reactive({
     job_requirements: '',
     benefits: '',
     tags: '',
+    link: '',
     headcount: 1,
     status: 1
 });

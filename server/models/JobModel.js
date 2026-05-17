@@ -46,20 +46,20 @@ const JobModel = {
       company_name, company_logo, company_size, company_type, company_desc,
       job_title, job_type, job_category, city,
       salary_min, salary_max, degree_required, experience,
-      job_description, job_requirements, benefits, tags,
+      job_description, job_requirements, benefits, tags, link,
       headcount, status
     } = jobData;
     const [result] = await db.query(
       `INSERT INTO jobs (company_name, company_logo, company_size, company_type, company_desc,
         job_title, job_type, job_category, city,
         salary_min, salary_max, degree_required, experience,
-        job_description, job_requirements, benefits, tags,
+        job_description, job_requirements, benefits, tags, link,
         headcount, status, publish_date, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURDATE(), NOW(), NOW())`,
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURDATE(), NOW(), NOW())`,
       [company_name, company_logo, company_size, company_type, company_desc,
        job_title, job_type, job_category, city,
        salary_min, salary_max, degree_required, experience,
-       job_description, job_requirements, benefits, tags,
+       job_description, job_requirements, benefits, tags, link,
        headcount, status ?? 1]
     );
     return result.insertId;
@@ -67,8 +67,9 @@ const JobModel = {
 
   // 更新岗位
   update: async (id, jobData) => {
+    const excludeFields = ['id', 'created_at', 'updated_at', 'publish_date', 'deadline'];
     const filteredData = Object.entries(jobData)
-      .filter(([_, value]) => value !== undefined)
+      .filter(([key, value]) => value !== undefined && !excludeFields.includes(key))
       .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
 
     if (Object.keys(filteredData).length === 0) {

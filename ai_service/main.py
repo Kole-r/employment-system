@@ -2,6 +2,8 @@ import os
 import json
 import re
 from typing import Optional
+from dotenv import load_dotenv
+load_dotenv()
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
