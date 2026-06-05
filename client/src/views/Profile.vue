@@ -504,7 +504,7 @@ const submitForm = async () => {
 }
 
 .form-input::placeholder { color: var(--text-disabled); }
-.form-input:focus { border-color: var(--text-secondary); }
+.form-input:focus { border-color: var(--text-secondary); background: #F9FAFB; }
 
 .select-wrap {
     position: relative;

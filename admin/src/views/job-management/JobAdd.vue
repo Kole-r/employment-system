@@ -233,20 +233,20 @@ const submitForm = async () => {
 </script>
 
 <style lang="scss" scoped>
-$black: #000000;
-$surface: #0A0A0A;
-$surface-1: #111111;
-$surface-2: #161616;
-$border: #1E1E1E;
-$border-hi: #2A2A2A;
-$g1: #333333;
-$g2: #555555;
-$g3: #888888;
-$g4: #AAAAAA;
-$g5: #CCCCCC;
-$white: #F0F0F0;
-$pure: #FFFFFF;
-$accent: #D71921;
+$black: #F7F8FA;
+$surface: #FFFFFF;
+$surface-1: #FFFFFF;
+$surface-2: #F2F4F7;
+$border: #E4E7EB;
+$border-hi: #D0D5DD;
+$g1: #98A2B3;
+$g2: #667085;
+$g3: #475467;
+$g4: #344054;
+$g5: #1D2939;
+$white: #344054;
+$pure: #101828;
+$accent: #2563EB;
 
 .add-page {
     font-family: 'Space Grotesk', system-ui, sans-serif;
@@ -345,7 +345,7 @@ $accent: #D71921;
     box-sizing: border-box;
 
     &::placeholder { color: $g1; }
-    &:focus { border-color: $g4; }
+    &:focus { border-color: $g4; background: #F9FAFB; }
 }
 
 .form-textarea {
@@ -363,7 +363,7 @@ $accent: #D71921;
     resize: vertical;
 
     &::placeholder { color: $g1; }
-    &:focus { border-color: $g4; }
+    &:focus { border-color: $g4; background: #F9FAFB; }
 }
 
 .form-error {
@@ -392,7 +392,7 @@ $accent: #D71921;
     transition: border-color 150ms ease-out;
     box-sizing: border-box;
 
-    &:focus { border-color: $g4; }
+    &:focus { border-color: $g4; background: #F9FAFB; }
 }
 
 .select-arrow {

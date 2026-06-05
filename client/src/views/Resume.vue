@@ -1031,7 +1031,7 @@ function exportText() {
     overflow-y: auto;
     border-radius: 12px;
     border: 1px solid var(--border);
-    background: #2a2a2a;
+    background: #F2F4F7;
     padding: var(--space-lg);
     display: flex;
     flex-direction: column;
@@ -1170,7 +1170,7 @@ function exportText() {
     position: fixed;
     inset: 0;
     z-index: 1000;
-    background: #111;
+    background: #F7F8FA;
     display: flex;
     flex-direction: column;
 }

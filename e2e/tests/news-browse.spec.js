@@ -40,11 +40,11 @@ test.describe('资讯浏览', () => {
   })
 
   test('资讯列表为空时应显示空状态', async ({ page }) => {
-    const emptyState = page.locator('.empty-state')
+    await page.waitForLoadState('networkidle')
     const newsCards = page.locator('.news-card')
     const count = await newsCards.count()
     if (count === 0) {
-      await expect(emptyState).toContainText('NO DATA')
+      await expect(page.locator('.empty-state')).toContainText('NO DATA')
     }
   })
 

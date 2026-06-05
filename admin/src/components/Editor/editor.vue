@@ -53,103 +53,103 @@ const mode = ref('default')
 </script>
 
 <style lang="scss">
-/* ── WangEditor Dark Override ── */
+/* ── WangEditor Light Override ── */
 
 .nd-editor {
-    border: 1px solid #333333;
+    border: 1px solid #D0D5DD;
     border-radius: 8px;
     overflow: hidden;
 }
 
 /* ── Toolbar ── */
 .nd-editor-toolbar {
-    border-bottom: 1px solid #222222 !important;
-    background: #111111 !important;
+    border-bottom: 1px solid #E4E7EB !important;
+    background: #FFFFFF !important;
 
     .w-e-bar {
-        background: #111111 !important;
+        background: #FFFFFF !important;
         border: none !important;
-        color: #999999 !important;
+        color: #667085 !important;
         padding: 4px 8px !important;
     }
 
     .w-e-bar-divider {
-        background: #222222 !important;
+        background: #E4E7EB !important;
     }
 
     .w-e-bar-item {
         .btn-text {
-            color: #999999 !important;
-            fill: #999999 !important;
+            color: #667085 !important;
+            fill: #667085 !important;
         }
 
         &:hover {
             .btn-text {
-                color: #E8E8E8 !important;
-                fill: #E8E8E8 !important;
+                color: #344054 !important;
+                fill: #344054 !important;
             }
         }
 
         button {
             background: transparent !important;
-            color: #999999 !important;
+            color: #667085 !important;
 
             &:hover {
-                background: #1A1A1A !important;
-                color: #E8E8E8 !important;
+                background: #F2F4F7 !important;
+                color: #344054 !important;
             }
         }
 
         svg {
-            fill: #999999 !important;
-            color: #999999 !important;
+            fill: #667085 !important;
+            color: #667085 !important;
         }
 
         &:hover svg {
-            fill: #E8E8E8 !important;
-            color: #E8E8E8 !important;
+            fill: #344054 !important;
+            color: #344054 !important;
         }
     }
 
     .w-e-bar-item-active {
-        background: #1A1A1A !important;
+        background: #F2F4F7 !important;
 
         .btn-text,
         svg {
-            color: #FFFFFF !important;
-            fill: #FFFFFF !important;
+            color: #101828 !important;
+            fill: #101828 !important;
         }
     }
 
     /* Dropdown menus in toolbar */
     .w-e-drop-panel {
-        background: #1A1A1A !important;
-        border: 1px solid #333333 !important;
+        background: #F2F4F7 !important;
+        border: 1px solid #D0D5DD !important;
         border-radius: 8px !important;
         box-shadow: none !important;
 
         .w-e-drop-panel-item {
-            color: #999999 !important;
+            color: #667085 !important;
 
             &:hover {
-                background: #222222 !important;
-                color: #E8E8E8 !important;
+                background: #E4E7EB !important;
+                color: #344054 !important;
             }
         }
     }
 
     /* Select / combobox */
     .w-e-select-list {
-        background: #1A1A1A !important;
-        border: 1px solid #333333 !important;
+        background: #F2F4F7 !important;
+        border: 1px solid #D0D5DD !important;
         border-radius: 8px !important;
 
         .w-e-select-item {
-            color: #999999 !important;
+            color: #667085 !important;
 
             &:hover {
-                background: #222222 !important;
-                color: #E8E8E8 !important;
+                background: #E4E7EB !important;
+                color: #344054 !important;
             }
         }
     }
@@ -157,15 +157,15 @@ const mode = ref('default')
 
 /* ── Editor Body ── */
 .nd-editor-body {
-    background: #0A0A0A !important;
+    background: #FFFFFF !important;
     min-height: 400px;
 
     .w-e-text-container {
-        background: #0A0A0A !important;
-        color: #E8E8E8 !important;
+        background: #FFFFFF !important;
+        color: #344054 !important;
 
         * {
-            color: #E8E8E8 !important;
+            color: #344054 !important;
         }
 
         [data-slate-editor] {
@@ -175,74 +175,74 @@ const mode = ref('default')
 
         /* Placeholder */
         .w-e-placeholder {
-            color: #555555 !important;
+            color: #98A2B3 !important;
             font-style: normal !important;
             padding-left: 24px !important;
         }
 
         /* Selection */
         ::selection {
-            background: rgba(215, 25, 33, 0.3) !important;
+            background: rgba(37, 99, 235, 0.15) !important;
         }
 
         /* Links */
         a {
-            color: #5B9BF6 !important;
+            color: #2563EB !important;
         }
 
         /* Code blocks */
         pre {
-            background: #111111 !important;
-            border: 1px solid #222222 !important;
+            background: #FFFFFF !important;
+            border: 1px solid #E4E7EB !important;
             border-radius: 4px !important;
             padding: 12px 16px !important;
 
             code {
-                color: #E8E8E8 !important;
+                color: #344054 !important;
                 background: transparent !important;
             }
         }
 
         code {
-            background: #1A1A1A !important;
-            color: #E8E8E8 !important;
+            background: #F2F4F7 !important;
+            color: #344054 !important;
             padding: 2px 6px !important;
             border-radius: 4px !important;
         }
 
         /* Blockquote */
         blockquote {
-            border-left: 3px solid #333333 !important;
-            color: #999999 !important;
+            border-left: 3px solid #D0D5DD !important;
+            color: #667085 !important;
             padding-left: 16px !important;
         }
 
         /* Table */
         table {
-            border: 1px solid #333333 !important;
+            border: 1px solid #D0D5DD !important;
 
             th {
-                background: #111111 !important;
-                border: 1px solid #333333 !important;
-                color: #E8E8E8 !important;
+                background: #FFFFFF !important;
+                border: 1px solid #D0D5DD !important;
+                color: #344054 !important;
             }
 
             td {
-                border: 1px solid #222222 !important;
-                color: #E8E8E8 !important;
+                border: 1px solid #E4E7EB !important;
+                color: #344054 !important;
             }
         }
 
         /* Images */
         img {
-            border: 1px solid #333333 !important;
+            border: 1px solid #D0D5DD !important;
             border-radius: 4px !important;
         }
 
         /* HR */
         hr {
             border: none !important;
-            border-top: 1px solid #222222 !important;
+            border-top: 1px solid #E4E7EB !important;
         }
 
         /* Lists */
@@ -254,7 +254,7 @@ const mode = ref('default')
     /* Scrollbar */
     .w-e-scroll {
         scrollbar-width: thin;
-        scrollbar-color: #333333 transparent;
+        scrollbar-color: #D0D5DD transparent;
 
         &::-webkit-scrollbar {
             width: 4px;
@@ -265,7 +265,7 @@ const mode = ref('default')
         }
 
         &::-webkit-scrollbar-thumb {
-            background: #333333;
+            background: #D0D5DD;
             border-radius: 2px;
         }
     }
@@ -273,61 +273,61 @@ const mode = ref('default')
 
 /* ── Modal / Dialog overrides (image, link, video) ── */
 .w-e-modal {
-    background: #111111 !important;
-    border: 1px solid #333333 !important;
+    background: #FFFFFF !important;
+    border: 1px solid #D0D5DD !important;
     border-radius: 12px !important;
     box-shadow: none !important;
 
     .w-e-modal-header {
-        color: #E8E8E8 !important;
-        border-bottom: 1px solid #222222 !important;
+        color: #344054 !important;
+        border-bottom: 1px solid #E4E7EB !important;
     }
 
     input, textarea {
-        background: #0A0A0A !important;
-        border: 1px solid #333333 !important;
+        background: #FFFFFF !important;
+        border: 1px solid #D0D5DD !important;
         border-radius: 6px !important;
-        color: #E8E8E8 !important;
+        color: #344054 !important;
         padding: 8px 12px !important;
 
         &:focus {
-            border-color: #666666 !important;
+            border-color: #98A2B3 !important;
             outline: none !important;
         }
 
         &::placeholder {
-            color: #555555 !important;
+            color: #98A2B3 !important;
         }
     }
 
     button {
         background: transparent !important;
-        border: 1px solid #333333 !important;
-        color: #E8E8E8 !important;
+        border: 1px solid #D0D5DD !important;
+        color: #344054 !important;
         border-radius: 999px !important;
         padding: 6px 16px !important;
 
         &:hover {
-            border-color: #E8E8E8 !important;
+            border-color: #344054 !important;
         }
     }
 }
 
 /* ── Tooltip ── */
 .w-e-tooltip {
-    background: #1A1A1A !important;
-    border: 1px solid #333333 !important;
+    background: #F2F4F7 !important;
+    border: 1px solid #D0D5DD !important;
     border-radius: 6px !important;
     box-shadow: none !important;
 
     .w-e-tooltip-item-wrapper {
-        color: #E8E8E8 !important;
+        color: #344054 !important;
     }
 }
 
 /* ── Fullscreen ── */
 .w-e-full-screen-container {
-    background: #000000 !important;
+    background: #F7F8FA !important;
     z-index: 9999 !important;
 }
 </style>

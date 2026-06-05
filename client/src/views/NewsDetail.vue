@@ -161,9 +161,9 @@ onMounted(async () => {
 }
 
 .fav-btn.active {
-    color: #e74c3c;
-    border-color: rgba(231, 76, 60, 0.3);
-    background: rgba(231, 76, 60, 0.05);
+    color: var(--accent);
+    border-color: var(--accent-subtle);
+    background: var(--accent-subtle);
 }
 
 /* ── Title ── */

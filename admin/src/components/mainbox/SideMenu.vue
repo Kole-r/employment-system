@@ -83,16 +83,16 @@ const vAdmin = {
 
 <style scoped lang="scss">
 /* ── Tokens ── */
-$black: #000000;
-$surface: #080808;
-$border: #1A1A1A;
-$g1: #333333;
-$g2: #555555;
-$g3: #888888;
-$g5: #CCCCCC;
-$white: #F0F0F0;
-$pure: #FFFFFF;
-$accent: #D71921;
+$black: #F7F8FA;
+$surface: #FFFFFF;
+$border: #E4E7EB;
+$g1: #98A2B3;
+$g2: #667085;
+$g3: #475467;
+$g5: #1D2939;
+$white: #344054;
+$pure: #101828;
+$accent: #2563EB;
 
 .side-aside {
     min-height: 100vh;
@@ -155,10 +155,10 @@ $accent: #D71921;
 
     /* Element Plus 变量覆盖 */
     --el-menu-bg-color: transparent;
-    --el-menu-text-color: #888888;
-    --el-menu-hover-text-color: #F0F0F0;
-    --el-menu-hover-bg-color: #0A0A0A;
-    --el-menu-active-color: #F0F0F0;
+    --el-menu-text-color: #667085;
+    --el-menu-hover-text-color: #1D2939;
+    --el-menu-hover-bg-color: #F2F4F7;
+    --el-menu-active-color: #101828;
     --el-menu-item-height: 44px;
     --el-menu-sub-item-height: 40px;
     --el-menu-base-level-padding: 12px;
@@ -177,14 +177,14 @@ $accent: #D71921;
         user-select: none;
 
         &:hover {
-            background: #0A0A0A;
+            background: #F2F4F7;
             color: $white;
         }
     }
 
     /* 激活项 */
     :deep(.el-menu-item.is-active) {
-        background: #111111;
+        background: #FFFFFF;
         color: $pure;
         font-weight: 500;
         position: relative;
@@ -205,7 +205,7 @@ $accent: #D71921;
     :deep(.el-sub-menu.is-opened > .el-sub-menu__title),
     :deep(.el-sub-menu.is-active > .el-sub-menu__title) {
         color: $white !important;
-        background: #0A0A0A !important;
+        background: #F2F4F7 !important;
     }
 
     /* 子菜单项 */
@@ -216,7 +216,7 @@ $accent: #D71921;
 
         &.is-active {
             color: $pure;
-            background: #111111;
+            background: #FFFFFF;
         }
     }
 

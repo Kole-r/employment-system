@@ -242,18 +242,18 @@ const sendMessage = async () => {
 </script>
 
 <style lang="scss" scoped>
-$black: #000000;
-$surface: #111111;
-$surface-raised: #1A1A1A;
-$border: #222222;
-$border-vis: #333333;
-$g1: #666666;
-$g2: #999999;
-$g3: #CCCCCC;
-$white: #E8E8E8;
-$pure: #FFFFFF;
-$accent: #D71921;
-$blue: #5B9BF6;
+$black: #F7F8FA;
+$surface: #FFFFFF;
+$surface-raised: #F2F4F7;
+$border: #E4E7EB;
+$border-vis: #D0D5DD;
+$g1: #98A2B3;
+$g2: #667085;
+$g3: #344054;
+$white: #344054;
+$pure: #101828;
+$accent: #2563EB;
+$blue: #2563EB;
 
 .admin-chatbot {
     position: fixed;

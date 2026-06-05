@@ -38,5 +38,8 @@ ai_service/venv/
 __pycache__/
 *.pyc
 
+# Ignore Python virtual environment
+ai_service/venv/
+
 # ChromaDB
 ai_service/chroma_db/

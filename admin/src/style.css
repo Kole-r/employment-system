@@ -1,21 +1,21 @@
 /* ── Nothing Design System — Global Reset ── */
 
 :root {
-  /* Dark Mode Tokens */
-  --black: #000000;
-  --surface: #111111;
-  --surface-raised: #1A1A1A;
-  --border: #222222;
-  --border-visible: #333333;
-  --text-disabled: #666666;
-  --text-secondary: #999999;
-  --text-primary: #E8E8E8;
-  --text-display: #FFFFFF;
-  --accent: #D71921;
-  --accent-subtle: rgba(215,25,33,0.15);
-  --success: #4A9E5C;
-  --warning: #D4A843;
-  --interactive: #5B9BF6;
+  /* Light Mode Tokens */
+  --black: #F7F8FA;
+  --surface: #FFFFFF;
+  --surface-raised: #F2F4F7;
+  --border: #E4E7EB;
+  --border-visible: #D0D5DD;
+  --text-disabled: #98A2B3;
+  --text-secondary: #667085;
+  --text-primary: #344054;
+  --text-display: #101828;
+  --accent: #2563EB;
+  --accent-subtle: rgba(37,99,235,0.08);
+  --success: #16A34A;
+  --warning: #D97706;
+  --interactive: #2563EB;
 
   /* Spacing */
   --space-xs: 4px;

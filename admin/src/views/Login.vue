@@ -195,7 +195,7 @@ const submitForm = () => {
 .login-page {
     width: 100vw;
     height: 100vh;
-    background-color: #000000;
+    background: linear-gradient(135deg, #F7F8FA 0%, #EEF2FF 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -206,9 +206,9 @@ const submitForm = () => {
 .dot-grid-bg {
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle, #222222 0.8px, transparent 0.8px);
+    background-image: radial-gradient(circle, #E4E7EB 0.8px, transparent 0.8px);
     background-size: 24px 24px;
-    opacity: 0.4;
+    opacity: 0.3;
 }
 
 .login-container {
@@ -216,8 +216,8 @@ const submitForm = () => {
     z-index: 1;
     width: 380px;
     padding: 48px 40px;
-    background-color: #111111;
-    border: 1px solid #222222;
+    background-color: #FFFFFF;
+    border: 1px solid #E4E7EB;
     border-radius: 16px;
 }
 
@@ -227,7 +227,7 @@ const submitForm = () => {
     font-family: 'Space Mono', monospace;
     font-size: 11px;
     letter-spacing: 0.1em;
-    color: #666666;
+    color: #98A2B3;
     text-transform: uppercase;
     margin-bottom: 32px;
 }
@@ -237,7 +237,7 @@ const submitForm = () => {
     font-family: 'Doto', 'Space Mono', monospace;
     font-size: 42px;
     font-weight: 700;
-    color: #FFFFFF;
+    color: #101828;
     letter-spacing: -0.02em;
     line-height: 1.0;
     margin: 0;
@@ -247,7 +247,7 @@ const submitForm = () => {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 18px;
     font-weight: 300;
-    color: #999999;
+    color: #667085;
     margin: 8px 0 40px 0;
     letter-spacing: 0.02em;
 }
@@ -262,7 +262,7 @@ const submitForm = () => {
         font-family: 'Space Mono', monospace;
         font-size: 11px;
         letter-spacing: 0.08em;
-        color: #999999;
+        color: #667085;
         text-transform: uppercase;
         line-height: 1;
         padding-bottom: 8px !important;
@@ -271,34 +271,34 @@ const submitForm = () => {
     :deep(.el-input__wrapper) {
         background-color: transparent;
         border: none;
-        border-bottom: 1px solid #333333;
+        border-bottom: 1px solid #D0D5DD;
         border-radius: 0;
         box-shadow: none !important;
         padding: 4px 0;
         transition: border-color 200ms ease;
 
         &:hover {
-            border-bottom-color: #666666;
+            border-bottom-color: #98A2B3;
         }
     }
 
     :deep(.el-input.is-focus .el-input__wrapper) {
-        border-bottom-color: #E8E8E8;
+        border-bottom-color: #344054;
     }
 
     :deep(.el-input__inner) {
         font-family: 'Space Grotesk', sans-serif;
         font-size: 16px;
-        color: #E8E8E8;
+        color: #344054;
         letter-spacing: 0;
 
         &::placeholder {
-            color: #666666;
+            color: #98A2B3;
         }
     }
 
     :deep(.el-input__suffix) {
-        color: #666666;
+        color: #98A2B3;
     }
 }
 
@@ -324,8 +324,8 @@ const submitForm = () => {
     text-transform: uppercase;
     border-radius: 999px;
     border: none;
-    background-color: #FFFFFF;
-    color: #000000;
+    background-color: #2563EB;
+    color: #FFFFFF;
     transition: opacity 200ms ease;
 
     &:hover {
@@ -345,31 +345,31 @@ const submitForm = () => {
     gap: 8px;
     margin-top: 40px;
     padding-top: 24px;
-    border-top: 1px solid #222222;
+    border-top: 1px solid #E4E7EB;
 }
 
 .footer-text {
     font-family: 'Space Mono', monospace;
     font-size: 11px;
     letter-spacing: 0.06em;
-    color: #666666;
+    color: #98A2B3;
     text-transform: uppercase;
 }
 
 .footer-dot {
-    color: #333333;
+    color: #D0D5DD;
     font-size: 14px;
 }
 
 /* Error state override */
 :deep(.el-form-item.is-error .el-input__wrapper) {
-    border-bottom-color: #D71921 !important;
+    border-bottom-color: #DC2626 !important;
 }
 
 :deep(.el-form-item__error) {
     font-family: 'Space Mono', monospace;
     font-size: 11px;
-    color: #D71921;
+    color: #DC2626;
     letter-spacing: 0.04em;
 }
 
@@ -382,12 +382,12 @@ const submitForm = () => {
 .toggle-link {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 13px;
-    color: #666666;
+    color: #98A2B3;
     cursor: pointer;
     transition: color 200ms ease;
 
     &:hover {
-        color: #E8E8E8;
+        color: #344054;
     }
 }
 
@@ -395,12 +395,12 @@ const submitForm = () => {
     font-family: 'Space Mono', monospace;
     font-size: 12px;
     letter-spacing: 0.04em;
-    color: #D71921;
+    color: #DC2626;
     text-align: center;
     margin-top: 4px;
 
     &.success {
-        color: #4CAF50;
+        color: #16A34A;
     }
 }
 </style>

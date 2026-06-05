@@ -11,6 +11,9 @@ test.describe('导航与路由', () => {
   })
 
   test('登录后应能访问首页', async ({ page }) => {
+    await page.route('**/webApi/stats**', route =>
+      route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ code: 200, data: { jobs: 0, companies: 0, news: 0 } }) })
+    )
     await page.route('**/webApi/job/**', route =>
       route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ code: 200, data: [] }) })
     )
@@ -18,7 +21,6 @@ test.describe('导航与路由', () => {
       route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ code: 200, data: [] }) })
     )
     await page.goto('/home')
-    // 不应被重定向到 login
     await page.waitForTimeout(1000)
     expect(page.url()).not.toContain('/login')
   })
@@ -60,6 +62,9 @@ test.describe('导航与路由', () => {
   })
 
   test('收藏页点击返回应跳转到首页', async ({ page }) => {
+    await page.route('**/webApi/stats**', route =>
+      route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ code: 200, data: { jobs: 0, companies: 0, news: 0 } }) })
+    )
     await page.route('**/webApi/user/favorites', route =>
       route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ code: 200, data: [] }) })
     )

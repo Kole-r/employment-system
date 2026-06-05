@@ -65,8 +65,8 @@
             </div>
           </div>
 
-          <!-- 加载状态 -->
-          <div v-if="isLoading" class="message assistant loading-message">
+          <!-- 加载状态：没有streaming内容时显示 -->
+          <div v-if="isLoading && !streaming" class="message assistant loading-message">
             <div class="message-meta">
               <span class="message-role">AI</span>
             </div>
@@ -82,7 +82,9 @@
             <input
               ref="inputRef"
               v-model="inputMessage"
-              @keyup.enter="sendMessage"
+              @compositionstart="isComposing = true"
+              @compositionend="isComposing = false"
+              @keyup.enter="onEnter"
               placeholder="输入问题..."
               :disabled="isLoading"
             />
@@ -99,14 +101,20 @@
 
 <script setup>
 import { ref, nextTick, onMounted, onBeforeUnmount } from 'vue'
-import axios from 'axios'
 
 const isOpen = ref(false)
 const inputMessage = ref('')
 const messages = ref([])
 const isLoading = ref(false)
+const streaming = ref(false)
 const messagesContainer = ref(null)
 const inputRef = ref(null)
+const isComposing = ref(false)
+
+const onEnter = () => {
+  if (isComposing.value) return
+  sendMessage()
+}
 
 // 拖拽状态
 const position = ref({ x: 0, y: 0 })
@@ -229,35 +237,76 @@ const sendMessage = async () => {
   messages.value.push({ role: 'user', content: question })
   inputMessage.value = ''
   isLoading.value = true
+  streaming.value = false
+
+  let assistantIndex = -1
 
   try {
-    const response = await axios.post('/api/ai/chat', { question }, { timeout: 60000 })
+    const response = await fetch('/api/ai/chat/stream', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question })
+    })
 
-    if (response.data && response.data.answer) {
-      messages.value.push({
-        role: 'assistant',
-        content: response.data.answer,
-        sources: response.data.sources || []
-      })
-    } else {
-      messages.value.push({
-        role: 'assistant',
-        content: '抱歉，暂时无法回答您的问题，请稍后再试。'
-      })
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`)
     }
+
+    const reader = response.body.getReader()
+    const decoder = new TextDecoder()
+    let buffer = ''
+    let sources = []
+
+    while (true) {
+      const { done, value } = await reader.read()
+      if (done) break
+
+      buffer += decoder.decode(value, { stream: true })
+      const lines = buffer.split('\n')
+      buffer = lines.pop() || '' // 保留不完整的行
+
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue
+        const data = JSON.parse(line.slice(6))
+
+        if (data.type === 'sources') {
+          sources = data.sources
+        } else if (data.type === 'token') {
+          if (assistantIndex === -1) {
+            // 第一个token到来：创建assistant消息，隐藏thinking
+            messages.value.push({ role: 'assistant', content: data.token, sources: sources })
+            assistantIndex = messages.value.length - 1
+            streaming.value = true
+          } else {
+            messages.value[assistantIndex].content += data.token
+          }
+          scrollToBottom()
+        } else if (data.type === 'done') {
+          // 生成完成
+        }
+      }
+    }
+
+    // 如果最终没收到内容，显示兜底提示
+    if (assistantIndex === -1 || !messages.value[assistantIndex].content) {
+      if (assistantIndex === -1) {
+        messages.value.push({ role: 'assistant', content: '抱歉，暂时无法回答您的问题，请稍后再试。' })
+      } else {
+        messages.value[assistantIndex].content = '抱歉，暂时无法回答您的问题，请稍后再试。'
+      }
+    }
+
   } catch (error) {
     console.error('发送消息失败:', error)
-    let errorMessage = '抱歉，网络异常，请稍后再试。'
-
-    if (error.response) {
-      errorMessage = error.response.data?.message || errorMessage
-    } else if (error.code === 'ECONNABORTED') {
-      errorMessage = '回答生成时间较长，请耐心等待...'
+    const msg = '抱歉，网络异常，请稍后再试。'
+    if (assistantIndex === -1) {
+      messages.value.push({ role: 'assistant', content: msg })
+    } else {
+      messages.value[assistantIndex].content = msg
     }
-
-    messages.value.push({ role: 'assistant', content: errorMessage })
   } finally {
     isLoading.value = false
+    streaming.value = false
     scrollToBottom()
   }
 }
@@ -267,19 +316,19 @@ const sendMessage = async () => {
 <style scoped>
 /* ========== Nothing Tokens ========== */
 .chatbot-container {
-  --nd-black: #000000;
-  --nd-surface: #111111;
-  --nd-surface-raised: #1A1A1A;
-  --nd-border: #222222;
-  --nd-border-visible: #333333;
-  --nd-text-disabled: #666666;
-  --nd-text-secondary: #999999;
-  --nd-text-primary: #E8E8E8;
-  --nd-text-display: #FFFFFF;
-  --nd-accent: #D71921;
-  --nd-accent-subtle: rgba(215,25,33,0.15);
-  --nd-success: #4A9E5C;
-  --nd-interactive: #5B9BF6;
+  --nd-black: #F7F8FA;
+  --nd-surface: #FFFFFF;
+  --nd-surface-raised: #F2F4F7;
+  --nd-border: #E4E7EB;
+  --nd-border-visible: #D0D5DD;
+  --nd-text-disabled: #98A2B3;
+  --nd-text-secondary: #667085;
+  --nd-text-primary: #344054;
+  --nd-text-display: #101828;
+  --nd-accent: #2563EB;
+  --nd-accent-subtle: rgba(37,99,235,0.08);
+  --nd-success: #16A34A;
+  --nd-interactive: #2563EB;
 
   --font-body: 'Space Grotesk', 'Noto Sans SC', system-ui, sans-serif;
   --font-mono: 'Space Mono', 'JetBrains Mono', monospace;

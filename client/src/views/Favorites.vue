@@ -172,7 +172,7 @@ onMounted(async () => {
     gap: 1px;
     background: var(--border);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 14px;
     overflow: hidden;
 }
 

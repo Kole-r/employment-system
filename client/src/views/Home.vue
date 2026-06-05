@@ -126,6 +126,21 @@ const formatDate = (dateStr) => {
 
 onMounted(async () => {
     try {
+        // 并行加载统计、推荐岗位、最新资讯
+        const [statsRes, newsRes] = await Promise.all([
+            axios.get('/webApi/stats').catch(() => null),
+            axios.get('/webApi/news/list?limit=4')
+        ])
+
+        if (statsRes?.data?.code === 200) {
+            stats.value = statsRes.data.data
+        }
+
+        if (newsRes.data.code === 200) {
+            latestNews.value = newsRes.data.data || []
+        }
+
+        // 推荐岗位（需登录，失败则回退到普通列表）
         let jobsData = []
         try {
             const recRes = await axios.get('/webApi/job/recommend?limit=6')
@@ -134,16 +149,7 @@ onMounted(async () => {
             const jobsRes = await axios.get('/webApi/job/list?limit=6')
             if (jobsRes.data.code === 200) jobsData = jobsRes.data.data || []
         }
-
         recommendJobs.value = jobsData
-        stats.value.jobs = jobsData.length
-        stats.value.companies = new Set(jobsData.map(j => j.company_name)).size
-
-        const newsRes = await axios.get('/webApi/news/list?limit=4')
-        if (newsRes.data.code === 200) {
-            latestNews.value = newsRes.data.data || []
-            stats.value.news = latestNews.value.length
-        }
     } catch (e) {
         console.error('首页数据加载失败:', e)
     } finally {
@@ -347,7 +353,7 @@ onMounted(async () => {
 .job-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 14px;
     padding: var(--space-lg);
     cursor: pointer;
     transition: border-color 200ms ease-out;
@@ -357,6 +363,7 @@ onMounted(async () => {
 
 .job-card:hover {
     border-color: var(--border-visible);
+    background: #FAFBFC;
 }
 
 .job-top {
@@ -461,7 +468,7 @@ onMounted(async () => {
 .news-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 14px;
     overflow: hidden;
     cursor: pointer;
     transition: border-color 200ms ease-out;
@@ -471,6 +478,7 @@ onMounted(async () => {
 
 .news-card:hover {
     border-color: var(--border-visible);
+    background: #FAFBFC;
 }
 
 .news-cover {

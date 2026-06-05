@@ -119,54 +119,11 @@ onUnmounted(() => {
   inset: 0;
   z-index: 0;
   overflow: hidden;
+  background: linear-gradient(135deg, #F7F8FA 0%, #EEF2FF 50%, #F0F4FF 100%);
 }
 
-.fluid-layer {
-  position: absolute;
-  inset: 0;
-}
-
-.fluid-bottom {
-  background: url('/IMG_1037.jpeg') center / cover no-repeat;
-  z-index: 1;
-}
-
-.fluid-top {
-  background:
-    linear-gradient(rgba(203, 253, 4, 0.319), rgba(0, 0, 0, 0.7)),
-    url('/IMG_1037.jpeg') center / cover no-repeat;
-  z-index: 2;
-  -webkit-mask-image: var(--fluid-mask-image);
-  mask-image: var(--fluid-mask-image);
-  -webkit-mask-size: 280px 280px;
-  mask-size: 280px 280px;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: var(--mask-x, -600px) var(--mask-y, -600px);
-  mask-position: var(--mask-x, -600px) var(--mask-y, -600px);
-}
-
+.fluid-layer,
 .fluid-blob {
-  position: absolute;
-  height: 280px;
-  width: 280px;
-  pointer-events: none;
-  z-index: 3;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  border: 1.5px solid rgba(222, 211, 211, 0.453);
-  -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
-  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-}
-
-.fluid-blob.active {
-  opacity: 1;
+  display: none;
 }
 </style>

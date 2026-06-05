@@ -193,7 +193,7 @@ onMounted(async () => {
 .news-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 14px;
     overflow: hidden;
     cursor: pointer;
     transition: border-color 200ms ease-out;

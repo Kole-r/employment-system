@@ -24,7 +24,7 @@
 .dot-grid-bg {
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle, #222222 0.8px, transparent 0.8px);
+    background-image: radial-gradient(circle, #E4E7EB 0.8px, transparent 0.8px);
     background-size: 24px 24px;
     opacity: 0.3;
 }
@@ -39,7 +39,7 @@
     font-family: 'Space Mono', monospace;
     font-size: 11px;
     letter-spacing: 0.1em;
-    color: #D71921;
+    color: #2563EB;
     display: block;
     margin-bottom: 16px;
 }
@@ -48,7 +48,7 @@
     font-family: 'Doto', 'Space Mono', monospace;
     font-size: 72px;
     font-weight: 700;
-    color: #FFFFFF;
+    color: #101828;
     letter-spacing: -0.03em;
     line-height: 1;
     margin: 0 0 16px 0;
@@ -57,7 +57,7 @@
 .notfound-desc {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 16px;
-    color: #666666;
+    color: #667085;
     margin: 0 0 40px 0;
 }
 
@@ -66,15 +66,15 @@
     font-size: 13px;
     letter-spacing: 0.06em;
     padding: 12px 28px;
-    border: 1px solid #333333;
+    border: 1px solid #D0D5DD;
     border-radius: 999px;
-    color: #999999;
+    color: #667085;
     text-decoration: none;
     transition: all 200ms ease-out;
 
     &:hover {
-        border-color: #FFFFFF;
-        color: #FFFFFF;
+        border-color: #101828;
+        color: #101828;
     }
 }
 </style>

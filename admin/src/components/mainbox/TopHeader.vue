@@ -2,7 +2,7 @@
     <header class="top-header">
         <!-- Left: Logo + Title -->
         <div class="header-left">
-            <button class="brand-mark" @click="handleCollapsed" aria-label="Toggle sidebar">屌</button>
+            <button class="brand-mark" @click="handleCollapsed" aria-label="Toggle sidebar">华</button>
             <span class="brand-name">智就业 · 智慧就业服务平台</span>
         </div>
 
@@ -118,20 +118,20 @@ const goLogout = () => {
 
 <style scoped lang="scss">
 /* ── Tokens ── */
-$black: #000000;
-$surface: #0A0A0A;
-$surface-1: #111111;
-$border: #1A1A1A;
-$border-hi: #2A2A2A;
-$g1: #333333;
-$g2: #555555;
-$g3: #888888;
-$g4: #AAAAAA;
-$g5: #CCCCCC;
-$white: #F0F0F0;
-$pure: #FFFFFF;
-$accent: #D71921;
-$green: #3DDC84;
+$black: #F7F8FA;
+$surface: #FFFFFF;
+$surface-1: #FFFFFF;
+$border: #E4E7EB;
+$border-hi: #D0D5DD;
+$g1: #98A2B3;
+$g2: #667085;
+$g3: #475467;
+$g4: #344054;
+$g5: #1D2939;
+$white: #344054;
+$pure: #101828;
+$accent: #2563EB;
+$green: #16A34A;
 
 .top-header {
     display: flex;
@@ -156,8 +156,8 @@ $green: #3DDC84;
     font-family: 'Space Mono', monospace;
     font-size: 16px;
     font-weight: 700;
-    color: $black;
-    background:#022b6e ;
+    color: #FFFFFF;
+    background: #2563EB;
     width: 28px;
     height: 28px;
     border-radius: 6px;
@@ -292,7 +292,7 @@ $green: #3DDC84;
     min-width: 180px;
     background: $surface-1;
     border: 1px solid $border-hi;
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 6px;
     z-index: 200;
 }

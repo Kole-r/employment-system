@@ -45,7 +45,7 @@ const handChange = (file) => {
 .upload-zone {
     width: 120px;
     height: 120px;
-    border: 1px dashed #333333;
+    border: 1px dashed #D0D5DD;
     border-radius: 8px;
     cursor: pointer;
     overflow: hidden;
@@ -53,7 +53,7 @@ const handChange = (file) => {
     position: relative;
 
     &:hover {
-        border-color: #666666;
+        border-color: #98A2B3;
     }
 }
 
@@ -72,11 +72,11 @@ const handChange = (file) => {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    color: #666666;
+    color: #98A2B3;
     transition: color 200ms ease-out;
 
     .upload-zone:hover & {
-        color: #999999;
+        color: #667085;
     }
 }
 

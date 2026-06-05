@@ -5,20 +5,74 @@ const axios = require('axios');
 // Python AI服务地址
 const AI_SERVICE_URL = process.env.AI_SERVICE_URL || 'http://localhost:8000';
 
-// 聊天接口 - 转发到Python AI服务
-router.post('/chat', async (req, res) => {
+// 聊天接口 - 流式转发到Python AI服务
+router.post('/chat/stream', async (req, res) => {
   try {
-    const { question, history } = req.body;
-    
+    const { question } = req.body;
+
     if (!question || question.trim() === '') {
       return res.status(400).json({
         success: false,
         message: '请输入您的问题'
       });
     }
-    
+
+    console.log(`收到用户问题(流式): ${question}`);
+
+    // 设置SSE响应头
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.setHeader('X-Accel-Buffering', 'no');
+    res.flushHeaders();
+
+    // 转发到Python AI服务的流式接口
+    const response = await axios.post(`${AI_SERVICE_URL}/api/ai/chat/stream`, {
+      question: question,
+    }, {
+      timeout: 120000,
+      responseType: 'stream',
+    });
+
+    // 直接管道转发SSE流
+    response.data.pipe(res);
+
+    response.data.on('error', (err) => {
+      console.error('流转发错误:', err.message);
+      res.end();
+    });
+
+  } catch (error) {
+    console.error('聊天接口错误:', error.message);
+
+    if (error.code === 'ECONNREFUSED') {
+      return res.status(503).json({
+        success: false,
+        message: 'AI服务未启动，请稍后再试'
+      });
+    }
+
+    res.status(500).json({
+      success: false,
+      message: 'AI服务异常，请稍后再试'
+    });
+  }
+});
+
+// 聊天接口 - 非流式（兼容旧版本）
+router.post('/chat', async (req, res) => {
+  try {
+    const { question, history } = req.body;
+
+    if (!question || question.trim() === '') {
+      return res.status(400).json({
+        success: false,
+        message: '请输入您的问题'
+      });
+    }
+
     console.log(`收到用户问题: ${question}`);
-    
+
     // 转发到Python AI服务
     const response = await axios.post(`${AI_SERVICE_URL}/api/ai/chat`, {
       question: question,
@@ -26,30 +80,30 @@ router.post('/chat', async (req, res) => {
     }, {
       timeout: 60000 // 60秒超时
     });
-    
+
     console.log(`AI回答: ${response.data.answer.substring(0, 100)}...`);
-    
+
     res.json({
       success: true,
       data: response.data
     });
   } catch (error) {
     console.error('聊天接口错误:', error.message);
-    
+
     if (error.code === 'ECONNREFUSED') {
       return res.status(503).json({
         success: false,
         message: 'AI服务未启动，请稍后再试'
       });
     }
-    
+
     if (error.code === 'ECONNABORTED') {
       return res.status(504).json({
         success: false,
         message: 'AI服务响应超时，请稍后再试'
       });
     }
-    
+
     res.status(500).json({
       success: false,
       message: 'AI服务异常，请稍后再试'

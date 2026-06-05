@@ -19,7 +19,7 @@ import SideMenu from '../components/mainbox/SideMenu.vue';
     overflow: auto;
     padding: 24px;
     height: calc(100vh - 56px);
-    background-color: #111111;
+    background-color: #F7F8FA;
     min-height: calc(100vh - 56px);
 }
 </style>

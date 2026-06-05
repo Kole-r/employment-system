@@ -156,7 +156,7 @@ const handleSubmit = async () => {
     font-family: var(--font-display);
     font-size: 22vw;
     font-weight: 900;
-    color: #040404;
+    color: #E4E7EB;
     letter-spacing: -0.04em;
     pointer-events: none;
     user-select: none;
@@ -250,6 +250,7 @@ const handleSubmit = async () => {
 
 .form-input:focus {
     border-color: var(--text-secondary);
+    background: #F9FAFB;
 }
 
 .form-error {

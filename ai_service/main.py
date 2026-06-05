@@ -1,14 +1,16 @@
 import os
 import json
 import re
+import threading
 from typing import Optional
 from dotenv import load_dotenv
 load_dotenv()
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, TextIteratorStreamer
 import chromadb
 
 # 配置
@@ -60,14 +62,15 @@ def load_model():
         trust_remote_code=True
     )
     
-    # 加载模型，使用MPS加速
+    # 加载模型，使用MPS加速 + SDPA注意力优化
     model = AutoModelForCausalLM.from_pretrained(
         MODEL_PATH,
         device_map="mps",
         torch_dtype=torch.float16,
-        trust_remote_code=True
+        trust_remote_code=True,
+        attn_implementation="sdpa"
     )
-    
+
     print("模型加载完成")
 
 def init_chroma():
@@ -166,49 +169,33 @@ async def chat(request: ChatRequest):
                     source_info["title"] = metadata["title"]
                 sources.append(source_info)
         
-        # 3. 构建Prompt
-        system_prompt = """你是一个专业的就业服务AI助手，专门回答求职、就业相关的问题。
-请根据以下参考资料来回答用户的问题。如果参考资料中没有相关信息，请基于你的知识给出合理的建议。
-回答要专业、准确、有帮助。"""
+        # 3. 构建精简Prompt
+        system_prompt = "你是就业服务AI助手，根据参考资料回答求职就业问题，回答简洁专业。"
 
         if context:
-            prompt = f"""{system_prompt}
-
-参考资料：
-{context}
-
-用户问题：{request.question}
-
-请基于以上参考资料回答："""
+            prompt = f"{system_prompt}\n参考资料：\n{context}\n用户：{request.question}\n助手："
         else:
-            prompt = f"""{system_prompt}
+            prompt = f"{system_prompt}\n用户：{request.question}\n助手："
 
-用户问题：{request.question}
-
-请回答："""
-        
-        # 4. 使用模型生成回答
+        # 4. 使用模型生成回答（优化参数）
         inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
-        
+
         with torch.no_grad():
             outputs = model.generate(
                 **inputs,
-                max_new_tokens=1024,
+                max_new_tokens=512,
                 temperature=0.7,
                 top_p=0.9,
                 repetition_penalty=1.1,
-                do_sample=True
+                do_sample=True,
+                pad_token_id=tokenizer.eos_token_id,
+                use_cache=True
             )
+
+        # 5. 只取新生成的token
+        generated_ids = outputs[0][inputs['input_ids'].shape[-1]:]
+        answer = tokenizer.decode(generated_ids, skip_special_tokens=True)
         
-        # 5. 解码输出
-        response = tokenizer.decode(outputs[0], skip_special_tokens=True)
-        
-        # 提取生成的回答（去掉输入部分）
-        answer = response[len(prompt):]
-        if not answer:
-            answer = response
-        
-        # 清理回答
         answer = answer.strip()
         
         return ChatResponse(
@@ -217,6 +204,91 @@ async def chat(request: ChatRequest):
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"对话失败: {str(e)}")
+
+@app.post("/api/ai/chat/stream")
+async def chat_stream(request: ChatRequest):
+    """流式对话接口 — 边生成边返回"""
+    try:
+        # 1. RAG检索
+        query_results = collection.query(
+            query_texts=[request.question],
+            n_results=3
+        )
+
+        context = ""
+        sources = []
+        if query_results and query_results['documents'][0]:
+            for i, doc in enumerate(query_results['documents'][0]):
+                metadata = query_results['metadatas'][0][i] if query_results['metadatas'] else {}
+                distance = query_results['distances'][0][i] if query_results['distances'] else 0
+                context += f"资料{i+1}: {doc}\n\n"
+                source_info = {
+                    "content": doc[:200] + "..." if len(doc) > 200 else doc,
+                    "type": metadata.get("type", "unknown"),
+                    "relevance": round(1 - distance, 4)
+                }
+                if metadata.get("company"):
+                    source_info["company"] = metadata["company"]
+                if metadata.get("title"):
+                    source_info["title"] = metadata["title"]
+                sources.append(source_info)
+
+        # 2. 构建精简Prompt
+        system_prompt = "你是就业服务AI助手，根据参考资料回答求职就业问题，回答简洁专业。"
+        if context:
+            prompt = f"{system_prompt}\n参考资料：\n{context}\n用户：{request.question}\n助手："
+        else:
+            prompt = f"{system_prompt}\n用户：{request.question}\n助手："
+
+        # 3. 设置流式生成
+        inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+        streamer = TextIteratorStreamer(
+            tokenizer,
+            skip_prompt=True,
+            skip_special_tokens=True
+        )
+
+        generate_kwargs = {
+            **inputs,
+            "max_new_tokens": 512,
+            "temperature": 0.7,
+            "top_p": 0.9,
+            "repetition_penalty": 1.1,
+            "do_sample": True,
+            "pad_token_id": tokenizer.eos_token_id,
+            "use_cache": True,
+            "streamer": streamer,
+        }
+
+        # 在后台线程中运行generate（streamer会阻塞直到生成完毕）
+        thread = threading.Thread(target=model.generate, kwargs=generate_kwargs)
+        thread.start()
+
+        # 4. SSE流式返回
+        async def generate_stream():
+            # 先发送参考来源
+            if sources:
+                yield f"data: {json.dumps({'type': 'sources', 'sources': sources})}\n\n"
+
+            # 逐token流式返回
+            for text in streamer:
+                yield f"data: {json.dumps({'type': 'token', 'token': text})}\n\n"
+
+            # 结束标记
+            yield f"data: {json.dumps({'type': 'done'})}\n\n"
+
+        return StreamingResponse(
+            generate_stream(),
+            media_type="text/event-stream",
+            headers={
+                "Cache-Control": "no-cache",
+                "Connection": "keep-alive",
+                "X-Accel-Buffering": "no",
+            }
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"对话失败: {str(e)}")
+
 
 @app.delete("/api/ai/document/{doc_type}/{doc_id}")
 async def delete_document(doc_type: str, doc_id: int):

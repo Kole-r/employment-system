@@ -31,6 +31,14 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:8000',
         changeOrigin: true,
+        configure: (proxy) => {
+          // SSE流式接口禁用缓冲
+          proxy.on('proxyReq', (proxyReq, req) => {
+            if (req.url.includes('/stream')) {
+              proxyReq.setHeader('X-Accel-Buffering', 'no');
+            }
+          });
+        },
       }
     }
   }

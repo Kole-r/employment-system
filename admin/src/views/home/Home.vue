@@ -92,7 +92,12 @@
 import useUserInfoStore from '../../store/userInfo.js'
 import axios from '../../util/axios.config.js'
 import { computed, ref, reactive, onMounted, onUnmounted } from 'vue'
-import * as echarts from 'echarts'
+import * as echarts from 'echarts/core'
+import { PieChart, BarChart } from 'echarts/charts'
+import { GridComponent, TooltipComponent, LegendComponent, GraphicComponent } from 'echarts/components'
+import { CanvasRenderer } from 'echarts/renderers'
+
+echarts.use([PieChart, BarChart, GridComponent, TooltipComponent, LegendComponent, GraphicComponent, CanvasRenderer])
 
 const userInfo = useUserInfoStore()
 const avatarUrl = computed(() =>
@@ -142,11 +147,11 @@ onMounted(async () => {
     updateTime()
     timer = setInterval(updateTime, 1000)
 
-    // ECharts dark theme config
-    echarts.registerTheme('ndDark', {
+    // ECharts light theme config
+    echarts.registerTheme('ndLight', {
         backgroundColor: 'transparent',
-        textStyle: { color: '#888888' },
-        title: { textStyle: { color: '#CCCCCC' } },
+        textStyle: { color: '#667085' },
+        title: { textStyle: { color: '#1D2939' } },
     })
 
     try {
@@ -189,12 +194,12 @@ onMounted(async () => {
 
         // Init category chart (doughnut)
         if (categoryChartRef.value) {
-            categoryChart = echarts.init(categoryChartRef.value, 'ndDark')
+            categoryChart = echarts.init(categoryChartRef.value, 'ndLight')
             categoryChart.setOption({
                 tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
                 legend: {
                     bottom: 0,
-                    textStyle: { color: '#888888', fontSize: 11 },
+                    textStyle: { color: '#667085', fontSize: 11 },
                     itemWidth: 10,
                     itemHeight: 10,
                 },
@@ -205,35 +210,35 @@ onMounted(async () => {
                     avoidLabelOverlap: false,
                     label: { show: false },
                     emphasis: {
-                        label: { show: true, fontSize: 13, fontWeight: 'bold', color: '#F0F0F0' },
+                        label: { show: true, fontSize: 13, fontWeight: 'bold', color: '#101828' },
                     },
                     data: categoryData,
                     itemStyle: {
-                        borderColor: '#111111',
+                        borderColor: '#FFFFFF',
                         borderWidth: 2,
                     },
                 }],
-                color: ['#D71921', '#5B9BF6', '#3DDC84', '#D4A843', '#A78BFA', '#F472B6'],
+                color: ['#2563EB', '#7C3AED', '#16A34A', '#D97706', '#EC4899', '#0EA5E9'],
             })
         }
 
         // Init city chart (horizontal bar)
         if (cityChartRef.value) {
-            cityChart = echarts.init(cityChartRef.value, 'ndDark')
+            cityChart = echarts.init(cityChartRef.value, 'ndLight')
             cityChart.setOption({
                 tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
                 grid: { left: 80, right: 40, top: 16, bottom: 24 },
                 xAxis: {
                     type: 'value',
-                    axisLine: { lineStyle: { color: '#1E1E1E' } },
-                    splitLine: { lineStyle: { color: '#1E1E1E' } },
-                    axisLabel: { color: '#555555' },
+                    axisLine: { lineStyle: { color: '#E4E7EB' } },
+                    splitLine: { lineStyle: { color: '#E4E7EB' } },
+                    axisLabel: { color: '#667085' },
                 },
                 yAxis: {
                     type: 'category',
                     data: cityNames,
-                    axisLine: { lineStyle: { color: '#1E1E1E' } },
-                    axisLabel: { color: '#888888', fontSize: 12 },
+                    axisLine: { lineStyle: { color: '#E4E7EB' } },
+                    axisLabel: { color: '#667085', fontSize: 12 },
                 },
                 series: [{
                     type: 'bar',
@@ -242,14 +247,14 @@ onMounted(async () => {
                     itemStyle: {
                         borderRadius: [0, 4, 4, 0],
                         color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-                            { offset: 0, color: '#D7192144' },
-                            { offset: 1, color: '#D71921' },
+                            { offset: 0, color: 'rgba(37,99,235,0.15)' },
+                            { offset: 1, color: '#2563EB' },
                         ]),
                     },
                     label: {
                         show: true,
                         position: 'right',
-                        color: '#888888',
+                        color: '#667085',
                         fontSize: 11,
                         fontFamily: 'Space Mono, monospace',
                     },
@@ -282,23 +287,23 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 /* ── Tokens ── */
-$black: #000000;
-$surface: #0A0A0A;
-$surface-1: #111111;
-$surface-2: #161616;
-$border: #1E1E1E;
-$border-hi: #2A2A2A;
-$g1: #333333;
-$g2: #555555;
-$g3: #888888;
-$g4: #AAAAAA;
-$g5: #CCCCCC;
-$white: #F0F0F0;
-$pure: #FFFFFF;
-$accent: #D71921;
-$green: #3DDC84;
-$amber: #D4A843;
-$blue: #5B9BF6;
+$black: #F7F8FA;
+$surface: #FFFFFF;
+$surface-1: #FFFFFF;
+$surface-2: #F2F4F7;
+$border: #E4E7EB;
+$border-hi: #D0D5DD;
+$g1: #98A2B3;
+$g2: #667085;
+$g3: #475467;
+$g4: #344054;
+$g5: #1D2939;
+$white: #344054;
+$pure: #101828;
+$accent: #2563EB;
+$green: #16A34A;
+$amber: #D97706;
+$blue: #2563EB;
 
 .home-page {
     font-family: 'Space Grotesk', system-ui, sans-serif;
@@ -347,7 +352,7 @@ $blue: #5B9BF6;
     gap: 20px;
     background: $surface-1;
     border: 1px solid $border;
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 16px 24px;
 }
 
@@ -393,7 +398,7 @@ $blue: #5B9BF6;
     gap: 32px;
     background: $surface-1;
     border: 1px solid $border;
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 20px 28px;
     margin-bottom: 48px;
 }
@@ -481,7 +486,7 @@ $blue: #5B9BF6;
 .stat-card {
     background: $surface-1;
     border: 1px solid $border;
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 28px 24px;
     display: flex;
     align-items: center;
@@ -530,7 +535,7 @@ $blue: #5B9BF6;
 .chart-card {
     background: $surface-1;
     border: 1px solid $border;
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 24px;
     transition: border-color 150ms ease-out;
 
