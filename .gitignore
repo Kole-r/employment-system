@@ -29,6 +29,12 @@ dist-ssr
 
 # Uploads
 /server/public/avataruploads/
+/server/public/newsuploads/
+
+# Personal documents and temp files
+*.docx
+test.html
+.$*.bkp
 
 # AI fine-tuning (too large for git)
 ai_tuning/
